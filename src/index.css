@@ -1,0 +1,180 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  /* font-family: 'Poppins'; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgb(117, 116, 116);
+  overflow-x: hidden;
+}
+.gray{
+  background-color: gray;
+}
+.dark-blue{
+  background-color: rgb(4, 4, 34);
+}
+.blue{
+  background-color: blue;
+}
+.brown{
+  background-color: rgb(90, 25, 25);
+}
+.white{
+  background-color: white;
+}
+.red{
+  background-color: rgb(110, 13, 13);
+}
+.green{
+  background-color: rgb(7, 51, 7);
+}
+.hunter-green{
+  background-color: rgba(7, 63, 46, 0.877);
+}
+button:disabled{
+  cursor: not-allowed;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+input{
+  outline: none;
+}
+
+.span {
+  z-index: 5;
+  position: relative;
+  transition: color 350ms ease;
+}
+.content{
+  display: block;
+  position: relative;
+  text-decoration: none;
+  background: transparent;
+  text-transform: capitalize;
+  width: 100%;
+  overflow: hidden;
+}
+.content:hover .span{
+  color: gray;
+}
+.content::after, .content::before{
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: white;
+  z-index: -1;
+}
+.content::before {
+  /*   background: blue; */
+    transform: translateX(-100%);
+    z-index: 1;
+  }
+.content:hover:before {
+  transform: translateX(0);
+  transition: transform 350ms ease;
+}
+
+.content::after {
+   z-index: 0;
+  transform: translateX(100%);
+  transition: none;
+  transition: transform 350ms ease;
+}
+
+.content:hover:after {
+  opacity: 1;
+  transform: translateX(0);
+ transition: transform 350ms 360ms ease;
+}
+.cardFlip{
+  width: 100%;
+}
+
+.elite{
+  font-family: "Special Elite";
+  font-weight: 400;
+  font-style: normal;
+}
+.black{
+  background-color: black;
+  color : white;
+}
+.dark-green{
+  background-color: rgb(21, 63, 66);
+}
+.orange{
+  background-color: rgb(194, 120, 9);
+}
+.violet{
+  background-color: rgb(26, 5, 66);
+}
+.pagination{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0 20px 0;
+  gap: 5px;
+}
+.pagination .page-num{
+  padding: 8px 15px;
+  cursor: pointer;
+  font-weight: 400;
+  display: flex;
+}
+.pagination .link{
+  padding: 8px;
+  cursor: pointer;
+  font-weight: 400;
+  display: flex;
+}
+.pagination .page-num:hover{
+  background-color: rgb(148, 148, 148);
+  scale : 1.2;
+}
+.pagination .link:hover{
+  background-color: rgb(148, 148, 148);
+  scale : 1.2;
+}
+.pagination .active{
+  background-color: rgb(148, 148, 148)
+}
+
+.skeleton{
+  animation: placeholderShimmer 1.5s linear infinite forwards;
+}
+@keyframes placeholderShimmer {
+  0% {
+    background-color: hsl(198, 16%, 28%);
+  }
+  100% {
+    background-color: hsl(203, 29%, 11%);
+  }
+}
+
+.temp{
+  grid-template-rows: auto
+}
+
+
+
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
