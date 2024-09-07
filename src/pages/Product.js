@@ -148,7 +148,6 @@ const Product = ({ admin }) => {
     }
   }
 
-  
   Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuvi')
 
   return (
