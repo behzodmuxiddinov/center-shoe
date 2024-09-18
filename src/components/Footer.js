@@ -17,11 +17,11 @@ const Footer = () => {
           <h3 className='text-xl min-w-[220px] flex justify-start'>{t("info")}:</h3>
           <div>
             <h3>+99893 525 00 99</h3>
-            <h3>+99899 102 00 99</h3>
+            <h3>+99893 930 60 90</h3>
           </div>
         </div>
         <div className='flex sm:flex-col'>
-          <h3 className='text-xl min-w-[220px] '>{t("social")}:</h3>
+          <h3 className='text-xl min-w-[220px]'>{t("social")}:</h3>
           <div className='flex'>
             <a href="https://www.instagram.com/sentrobuvisports/?hl=en" target='_blank'>
               <InstagramIcon className='w-4 h-4 cursor-pointer mx-3 sm:ml-0'/>

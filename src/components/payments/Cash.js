@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { InputMask } from 'primereact/inputmask';
 import { showSuccessOrder } from '../../store/StoreReducer';
+import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 
 const Cash = () => {
@@ -14,6 +15,8 @@ const Cash = () => {
     const { light } = store
 
     const dispatch = useDispatch()
+
+    const [pending, setPending] = useState(false)
     
     const refreshToken = localStorage?.getItem("refreshToken")
 
@@ -39,6 +42,7 @@ const Cash = () => {
         }
         data.products = products
 
+        setPending(true)
         await axios.post("http://13.51.195.13:5000/api/orders/create", data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
@@ -46,6 +50,7 @@ const Cash = () => {
         })
         .then(res => {
             dispatch(showSuccessOrder())
+            setPending(false)
         })
         .catch(err => alert(err))
         reset()
@@ -104,8 +109,8 @@ const Cash = () => {
                     className='p-3 mt-4 rounded-md w-full border-[1px] border-gray-300 focus:border-gray-500'
                 />
                 <p className='text-sm w-full text-start mt-1 text-red-700'>{errors.address?.message}</p>
-                <button className={`w-full mt-3 px-5 font-semibold text-xl rounded-md py-2 ${light ? 'bg-black text-white' : 'bg-white text-black'}`}>
-                    {t("order")}
+                <button className={`w-full mt-3 px-5 font-semibold text-xl rounded-md py-2 ${light ? 'bg-black text-white' : 'bg-white text-black'} ${pending && 'opacity-75'}`}>
+                    {pending ? <CircularProgress/> : t("order")}
                 </button>
             </div>
         </form>
