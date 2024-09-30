@@ -47,16 +47,16 @@ const ProductCard = ({ product, viewed, setViewed }) => {
   return (
     <Link to={`product/${id}`} onClick={addToViewed} className='text-center flex flex-col items-center wow animate__animated animate__zoomIn font-semibold'>
         <img 
-          src={`http://13.51.195.13:5000/${productImages[0].image}`}
+          src={`https://api.sentrobuv.uz/${productImages[0].image}`}
           loading='lazy'
           alt={name} 
-          className='w-[300px] h-[330px] md:w-[280px] md:h-[300px] sm:w-[110px] sm:h-[130px] mb-3'
+          className='w-[300px] h-[310px] md:w-[280px] md:h-[300px] sm:w-[110px] sm:h-[130px] mb-3'
           onMouseOver={e => (e.currentTarget.src = `${productImages.length > 1 
             ? 
-              `http://13.51.195.13:5000/${productImages[1].image}` 
+              `https://api.sentrobuv.uz/${productImages[1].image}` 
             : 
-              `http://13.51.195.13:5000/${productImages[0].image}`}`)}
-          onMouseOut={e => (e.currentTarget.src = `http://13.51.195.13:5000/${productImages[0].image}`)}
+              `https://api.sentrobuv.uz/${productImages[0].image}`}`)}
+          onMouseOut={e => (e.currentTarget.src = `https://api.sentrobuv.uz/${productImages[0].image}`)}
         />
         <h3 className='text-md'>
           {(() => {

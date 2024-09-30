@@ -70,12 +70,13 @@ const Login = () => {
               });
         }else{
             try{
-                await axios.post(`${BASE_URL}/api/users/signin`, data)
+                await axios.post(`${BASE_URL}/users/signin`, data)
                 .then(res => {
                     localStorage.setItem('refreshToken', res.data.tokens.refreshToken)
                     reset()
                 }).then(() => {
                     navigate('/account')
+                    window.location.reload()
                 })
                 .catch(err => dispatch(loginFail()))
             } catch(error){

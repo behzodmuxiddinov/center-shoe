@@ -23,11 +23,13 @@ const Account = () => {
   Tabtitle('account')
 
   useEffect(() => {
-    dispatch(fetchAccount())
+    if(refreshToken){
+      dispatch(fetchAccount())
+    }
   }, [])
 
   const logout = async () => {
-    const request = await fetch(`${BASE_URL}/api/users/logout`, {
+    const request = await fetch(`${BASE_URL}/users/logout`, {
       method: "POST",
       headers: {
         Authorization : `Bearer ${refreshToken}`

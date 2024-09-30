@@ -11,7 +11,7 @@ const initialState = {
 
 export const sentEmail = createAsyncThunk('email/recoveryEmail', async ( data ) => {
     console.log(data)
-    return await axios.post(`${BASE_URL}/api/users/forgot-password`, data)
+    return await axios.post(`${BASE_URL}/users/forgot-password`, data)
         .then(res => res.data)
         .catch(err => {
             if(err.response.data.message == "User with this email does not exist!"){

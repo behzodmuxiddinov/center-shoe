@@ -23,11 +23,11 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
   const [products, setProducts] = useState([])
   const [itemOffset, setItemOffset] = useState(24);
   const [pageCount, setPageCount] = useState(1);
-  const itemsPerPage = 12
+  const itemsPerPage = 8
   const endOffset = itemOffset + itemsPerPage;
   useEffect(() => {
     const fetchProducts = async () => {
-      const req = await axios.get(`${BASE_URL}/api/products`)
+      const req = await axios.get(`${BASE_URL}/products`)
       .then(res => {
         setProducts(res.data.data.products)
         setCurrentItems(res.data.data.products)
@@ -41,18 +41,12 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
     dispatch(toggleFilter())
   }
   
-  // let recently = localStorage.getItem('viewed')
-  
-  
-  
-  
   const { t } = useTranslation()
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % products?.length;
     setItemOffset(newOffset);
     localStorage.setItem('newOffset',newOffset)
-    console.log(products)
   };
 
   useEffect(() => {

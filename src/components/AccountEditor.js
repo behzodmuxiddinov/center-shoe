@@ -8,6 +8,7 @@ import axios from 'axios'
 import CloseIcon from '@mui/icons-material/Close';
 import Button from './Button'
 import { InputMask } from 'primereact/inputmask'
+import { useNavigate } from 'react-router-dom'
 
 const AccountEditor = () => {
 
@@ -21,7 +22,7 @@ const AccountEditor = () => {
     const [number, setNumber] = useState(phoneNumber)
 
     const refreshToken = localStorage?.getItem("refreshToken")
-
+    let navigate = useNavigate()
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
@@ -40,15 +41,19 @@ const AccountEditor = () => {
     }
 
     const onSubmit = async ( data ) => {
-        await axios.put(`http://13.51.195.13:5000/api/users/update/${id}`, data, {
+        await axios.put(`https://api.sentrobuv.uz/users/update/${id}`, data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
             }
         })
         .then(res => {
-            reset()
-            window.location.reload()
             alert(t("updated"))
+            reset()
+            navigate('/')
+            dispatch(hideEditor())
+        })
+        .then(res => {
+            window.location.reload()
         })
         .catch(err => alert(err))
     }

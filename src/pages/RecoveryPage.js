@@ -53,7 +53,7 @@ const RecoveryPage = () => {
         message: t("notconfirmed")
       });
     }else{
-      await axios.post(`${BASE_URL}/api/users/forgot-password/${token}`, data)
+      await axios.post(`${BASE_URL}/users/forgot-password/${token}`, data)
       .then(res => alert(t("passwordchanged")))
       .catch(err => alert(err))
       reset()

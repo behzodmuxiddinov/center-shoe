@@ -18,7 +18,7 @@ const Main = ({ viewed, setViewed, admin }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const req = await axios.get(`${BASE_URL}/api/products`)
+        const req = await axios.get(`${BASE_URL}/products`)
         const res = req
         setProducts(res.data.data.products)
       } catch (error) {
@@ -29,18 +29,6 @@ const Main = ({ viewed, setViewed, admin }) => {
   },[]);
 
   const { t } = useTranslation()
-  let refreshToken = localStorage?.getItem('refreshToken')
-  const fetchCartItems = async () => {
-    return await axios
-        .get(`{BASE_URL}/api/baskets`,{
-            headers : {
-              Authorization : `Bearer ${refreshToken}`,
-              "Content-Type" : "application/json"
-            },
-        })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
-  }
 
   Tabtitle('sentrobuvi')
 
@@ -59,7 +47,7 @@ const Main = ({ viewed, setViewed, admin }) => {
           </div>
           <div className='w-full grid grid-cols-4 gap-y-7 gap-x-2 xl:grid-cols-3 lg:grid-cols-2 temp justify-center'>
             {
-              products?.slice(0,12).map(product => {
+              products?.slice(0,8).map(product => {
                 return <ProductCard key={product.id} product={product} viewed={viewed} setViewed={setViewed}/>
               })
             }

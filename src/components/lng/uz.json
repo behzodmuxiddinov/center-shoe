@@ -83,5 +83,9 @@
     "undefineduser" : "bunday e-mailga ega foydalanuvchi mavjud emas!",
     "confirmpassword" : "Parolni tasdiqlang",
     "notconfirmed" : "Parol tasdiqlanmadi",
-    "passwordchanged" : "Parol muvaffaqiyatli almashtirildi!"
+    "passwordchanged" : "Parol muvaffaqiyatli almashtirildi!",
+    "jacket" : "Vitrofka",
+    "cardigan" : "Kardigan",
+    "gilet" : "Nimcha",
+    "jumper" : "jemfer"
 }

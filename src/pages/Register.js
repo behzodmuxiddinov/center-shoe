@@ -34,7 +34,7 @@ const Register = () => {
   });
 
     const onSubmit = ( data ) => {
-        axios.post(`${BASE_URL}/api/users/signup`, data)
+        axios.post(`${BASE_URL}/users/signup`, data)
         .then(res => {
             setTimeout(() => {
                 dispatch(userSuccess())

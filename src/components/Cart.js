@@ -39,7 +39,7 @@ const Cart = () => {
   }
 
   const deleteCartItem = async (e) => {
-    await axios.delete(`http://13.51.195.13:5000/api/baskets/delete/basket-items/${e.target.id}`,{
+    await axios.delete(`https://api.sentrobuv.uz/baskets/delete/basket-items/${e.target.id}`,{
       headers : {
         Authorization : `Bearer ${refreshToken}`
       }
@@ -63,7 +63,7 @@ const Cart = () => {
             {
               cartItems[0].basketItems?.map(item => (
                 <div key={item.id} className='w-full flex items-center justify-between mb-3 font-semibold'>
-                  <img src={`http://13.51.195.13:5000/${item.product.productImages[0].image}`} alt={item.product.name} className='w-[35%] h-[120px]'/>
+                  <img src={`https://api.sentrobuv.uz/${item.product.productImages[0].image}`} alt={item.product.name} className='w-[35%] h-[120px]'/>
                   <div className='w-[50%] flex flex-col break-words'>
                     <h3>{item.product.name}</h3>
                     {item.size && item.color && <div className='flex items-center'>

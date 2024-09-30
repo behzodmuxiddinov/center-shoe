@@ -33,12 +33,11 @@ const Product = ({ admin }) => {
   const [images, setImages] = useState([])
   const [size1, setSize1] = useState(null)
   const [color, setColor] = useState(null)
-
   useEffect(() => {
     const fetchProduct = async () => {
       setFetching(true)
       try {
-        const req = await axios.get(`${BASE_URL}/api/products/${id}`)
+        const req = await axios.get(`${BASE_URL}/products/${id}`)
         .then(res => {
           setProduct(res.data)
           setImages(res.data.productImages.map(item => item.image))
@@ -83,7 +82,7 @@ const Product = ({ admin }) => {
   
   const deleteProduct = async () => {
     setIsPending(true)
-    await axios.delete(`${BASE_URL}/api/products/delete/${id}`, {
+    await axios.delete(`${BASE_URL}/products/delete/${id}`, {
       headers : {
         Authorization : `Bearer ${refreshToken}`
       }
@@ -114,8 +113,8 @@ const Product = ({ admin }) => {
         image : productImages[0].image
       }
       let sameItems = cartItems?.[0].basketItems?.filter(item => item.size == obj.size && item.color == obj.color && obj.name == item.product.name && obj.brand == item.product.brand)
-      if(sameItems.length > 0){
-        await axios.put(`${BASE_URL}/api/baskets/update/${sameItems[0].id}`, {
+      if(sameItems?.length > 0){
+        await axios.put(`${BASE_URL}/baskets/update/${sameItems[0].id}`, {
           product_id : sameItems[0].product_id,
           count : obj.count + sameItems[0].count
         },
@@ -132,7 +131,7 @@ const Product = ({ admin }) => {
         })
         .catch(err => alert(err))
       }else{
-        await axios.post(`${BASE_URL}/api/baskets/create`, obj, {
+        await axios.post(`${BASE_URL}/baskets/create`, obj, {
           headers : {
             Authorization : `Bearer ${refreshToken}`,
             "Content-Type" : "application/json"
@@ -169,7 +168,7 @@ const Product = ({ admin }) => {
             {
               productImages?.map(item => (
                 <SwiperSlide key={item.image}>
-                  <img src={`http://13.51.195.13:5000/${item.image}`} className='w-full h-full object-cover' alt={item.image}/>
+                  <img src={`https://api.sentrobuv.uz/${item.image}`} className='w-full h-full object-cover' alt={item.image}/>
                 </SwiperSlide>
               ))
             }
@@ -223,7 +222,7 @@ const Product = ({ admin }) => {
             </div>
           </div>
         </div>
-        <SuggestedProducts id={id}/>
+        {/* <SuggestedProducts id={id}/> */}
       </div>
     
     // <div>fds</div>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { BASE_URL } from '../api/Base_URL'
 
 let refreshToken = localStorage?.getItem('refreshToken')
 
@@ -10,15 +11,25 @@ const initialState = {
 }
 
 export const fetchCartItems = createAsyncThunk('cartItems/fetchItems', async () => {
-    return await axios
-        .get('http://13.51.195.13:5000/api/baskets',{
-            headers : {
-              Authorization : `Bearer ${refreshToken}`,
-              "Content-Type" : "application/json"
-            },
-        })
-        .then(res => res.data)
-        .catch(err => console.error(err))
+    if(!refreshToken){
+        return
+    }else{
+        return await axios
+            .get(`${BASE_URL}/baskets`,{
+                headers : {
+                Authorization : `Bearer ${refreshToken}`,
+                "Content-Type" : "application/json"
+                },
+            })
+            .then(res => res.data)
+            .catch(err => {
+                if(err.response.data.message == 'You do not have a shopping cart yet!'){
+                    return
+                }else{
+                    console.error(err)
+                }
+            })
+        }
 })
 
 const cartSlice = createSlice({

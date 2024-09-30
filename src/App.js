@@ -7,6 +7,7 @@ import { Layout, Cart, Filter, Overlay, Preloading, Success, ProtectedAdmin, Pro
 import { Account, Main, Register, Login, Product, Catalog, Checkout, AdminPage, RecoveryPage } from './pages'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProducts } from './store/ProductSlice';
+import { BASE_URL } from './api/Base_URL'
 import axios from 'axios';
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     i18n.changeLanguage(lastLn)
     localStorage.setItem('viewed', null)
     if(refreshToken){
-      axios.get(`http://13.51.195.13:5000/api/users/profile`, {
+      axios.get(`${BASE_URL}/users/profile`, {
         headers : {
           Authorization : `Bearer ${refreshToken}`
         }

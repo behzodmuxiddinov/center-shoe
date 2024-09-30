@@ -39,6 +39,7 @@ const AdminPage = () => {
         { value: 'XL', label: 'XL' },
         { value: '2XL', label: '2XL' },
         { value: '3XL', label: '3XL' },
+        { value: '4XL', label: '4XL'},
         { value: '30', label: '30' },
         { value: '31', label: '31' },
         { value: '32', label: '32' }, 
@@ -68,7 +69,11 @@ const AdminPage = () => {
         { value: 'Suits', label: 'Suits' },
         { value: 'Slippers', label: 'Slippers' }, 
         { value: 'Classic shirt', label: 'Classic shirt' },
-        { value: 'Sneakers', label: 'Sneakers' }
+        { value: 'Sneakers', label: 'Sneakers' },
+        { value: 'Cardigan', label: 'Cardigan' },
+        { value: 'Jacket', label: 'Jacket' },
+        { value: 'Gilet', label: 'Gilet'},
+        { value: 'Jumper', label: 'Jumper'}
     ]
 
     let colorOptions = [
@@ -111,7 +116,7 @@ const AdminPage = () => {
         formData.append('pictures', data.pictures)
         formData.append('product_id', uuidv4())
         setPending(true)
-        await axios.post(`${BASE_URL}/api/products/create`, data2, {
+        await axios.post(`${BASE_URL}/products/create`, data2, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`,
                 "Content-Type" : "application/json"
@@ -119,7 +124,7 @@ const AdminPage = () => {
             body : JSON.stringify(data2)
         })
         .then(res => {
-                axios.post(`${BASE_URL}/api/products/upload/${res.data.data.id}`, data.pictures, {
+                axios.post(`${BASE_URL}/products/upload/${res.data.data.id}`, data.pictures, {
                 headers : {
                     Authorization : `Bearer ${refreshToken}`,
                     "Content-Type" : "multipart/form-data"

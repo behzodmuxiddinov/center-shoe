@@ -43,7 +43,7 @@ const Cash = () => {
         data.products = products
 
         setPending(true)
-        await axios.post("http://13.51.195.13:5000/api/orders/create", data, {
+        await axios.post("https://api.sentrobuv.uz/orders/create", data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
             }

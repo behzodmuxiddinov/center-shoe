@@ -1,5 +1,5 @@
 asosiy ip address, barcha requestlar shu ip addressga jo'natiladi: 
-http://13.51.195.13:5000
+https://api.sentrobuv.uz
 
 
 <!-- Routes -->

@@ -75,6 +75,26 @@ const Filter = ({ setFilterby, filterby }) => {
             id : uuidv4(),
             value : "Oxford shoes",
             active : false
+        },
+        {
+            id : uuidv4(),
+            value : "Cardigan",
+            active : false
+        },
+        {
+            id : uuidv4(),
+            value : "Jacket",
+            active : false
+        },
+        {
+            id : uuidv4(),
+            value : "Gilet",
+            active : false
+        },
+        {
+            id : uuidv4(),
+            value : "Jumper",
+            active : false
         }
     ])
 
@@ -133,6 +153,26 @@ const Filter = ({ setFilterby, filterby }) => {
             id : uuidv4(),
             name : t("classicshirt"),
             value : "Classic shirt"
+        },
+        {
+            id : uuidv4(),
+            name : t("cardigan"),
+            value : "Cardigan"
+        },
+        {
+            id : uuidv4(),
+            name : t("jacket"),
+            value : "Jacket"
+        },
+        {
+            id : uuidv4(),
+            name : t("gilet"),
+            value : "Gilet"
+        },
+        {
+            id : uuidv4(),
+            name : t("jumper"),
+            value : "Jumper"
         }
     ]
 
@@ -173,7 +213,7 @@ const Filter = ({ setFilterby, filterby }) => {
             <h2 className='text-xl uppercase mb-2'>{t("filter")}</h2>
             {
                 filterBtns.map(item => (
-                    <button key={item.id} value={item.value} onClick={changeFilter} className='flex relative items-center mb-2 hover:scale-105'>
+                    <button key={item.id} value={item.value} onClick={changeFilter} className='flex relative items-center mb-2 hover:scale-105 lowercase'>
                         <span className='w-2 h-2 rounded-full absolute z-10 bg-gray-600 pointer-events-none'></span>
                         <h4 className={`transition-all duration-300 z-20 pointer-events-none ${light ? 'bg-white' : 'bg-black'} ${item.active ? 'translate-x-3' : 'translate-x-0'}`}>
                             {filters.map(filter => (
@@ -184,7 +224,7 @@ const Filter = ({ setFilterby, filterby }) => {
                 ))
             }
         </div>
-        <div className='w-full flex flex-col items-center justify-center border-gray-500 border-t-[1px] pb-3 '>
+        <div className='w-full flex flex-col items-center justify-center border-gray-500 border-t-[1px] pb-3'>
             {
                 filterby.length > 0 
                 ? <button onClick={resetFilter} className='capitalize px-3 py-2 min-w-[200px] border-[1px] border-gray-300 mt-4'>{t("reset")}</button>

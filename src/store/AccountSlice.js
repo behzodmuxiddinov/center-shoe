@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import axios from "axios";
+import { BASE_URL } from '../api/Base_URL'
 
 
 const initialState = {
@@ -14,14 +15,16 @@ const initialState = {
 
 export const fetchAccount = createAsyncThunk('account/fetchAccount', async () => {
     let refreshToken = localStorage.getItem('refreshToken')
-    return await axios.get(`http://13.51.195.13:5000/api/users/profile`, {
+    return await axios.get(`${BASE_URL}/users/profile`, {
         headers: {
             Authorization : `Bearer ${refreshToken}`,
             "Content-Type" : "application/json"
         }
     })
     .then(res => res.data)
-    .catch(error => alert(error))
+    .catch(error => {
+        localStorage.clear('refreshToken')
+    })
 })
 
 const accountSlice = createSlice({
