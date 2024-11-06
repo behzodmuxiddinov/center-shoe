@@ -224,10 +224,10 @@ const Filter = ({ setFilterby, filterby }) => {
                 ))
             }
         </div>
-        <div className='w-full flex flex-col items-center justify-center border-gray-500 border-t-[1px] pb-3'>
+        <div className='w-full flex flex-col items-center justify-center border-gray-500 border-t-[1px] py-2'>
             {
                 filterby.length > 0 
-                ? <button onClick={resetFilter} className='capitalize px-3 py-2 min-w-[200px] border-[1px] border-gray-300 mt-4'>{t("reset")}</button>
+                ? <button onClick={resetFilter} className='capitalize px-3 py-2 mb-1 min-w-[200px] sm:min-w-[150px] border-[1px] border-gray-300'>{t("reset")}</button>
                 : null
             }
             <div onClick={applyFilter}>

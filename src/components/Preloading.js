@@ -1,5 +1,5 @@
 import React from 'react'
-import { TwelveDotsScaleRotate } from "react-svg-spinners";
+import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
 
 const Preloading = () => {
@@ -9,7 +9,7 @@ const Preloading = () => {
 
   return (
     <div className='w-full h-screen flex justify-center items-center'>
-      <TwelveDotsScaleRotate width={80} height={80} color={light ? 'black' : 'white'}/>
+      <CircularProgress size={40}/>
     </div>
   )
 }

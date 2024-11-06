@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
     "axios": "^1.7.2",
+    "clsx": "^2.1.1",
     "dotenv": "^16.4.5",
     "imask": "^7.6.1",
     "primereact": "^10.6.6",
@@ -37,7 +38,9 @@
     "react-slick": "^0.30.2",
     "react-slideshow-image": "^4.3.1",
     "react-svg-spinners": "^0.3.1",
+    "react-toastify": "^10.0.6",
     "swiper": "^11.1.1",
+    "tailwind-merge": "^2.5.4",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"
   },

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { InputMask } from 'primereact/inputmask';
-import { showSuccessOrder } from '../../store/StoreReducer';
+import { showSuccessOrder } from '../store/StoreReducer';
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 

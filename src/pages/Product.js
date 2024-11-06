@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FormattedNumber } from '../components/utiles/FormattedNUmber';
 import { useTranslation } from 'react-i18next';
-import { Tabtitle, SuggestedProducts, Button, Preloading } from '../components';
+import { Tabtitle, Button, Preloading, Container } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
-import { showCart, decreaseQuantity, increaseQuantity } from '../store/StoreReducer';
+import { showCart, decreaseQuantity, increaseQuantity, openEditModal } from '../store/StoreReducer';
 import { fetchCartItems } from '../store/CartSlice';
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,46 +14,23 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import useFetchProduct from '../hooks/useFetchProduct';
+import { ToastContainer } from 'react-toastify';
 
 
 const Product = ({ admin }) => {
-  
   
   let refreshToken = localStorage?.getItem('refreshToken')
   const navigate = useNavigate()
 
   const store = useSelector(state => state.store)
   const store2 = useSelector(state => state.cartItems)
-  const { quantity, light } = store 
+  const { quantity } = store 
   const { cartItems } = store2
   const dispatch = useDispatch()
-  const [product, setProduct] = useState({})
-  const [fetching, setFetching] = useState(false)
   const [isPending, setIsPending] = useState(false)
-  const [images, setImages] = useState([])
   const [size1, setSize1] = useState(null)
   const [color, setColor] = useState(null)
-  useEffect(() => {
-    const fetchProduct = async () => {
-      setFetching(true)
-      try {
-        const req = await axios.get(`${BASE_URL}/products/${id}`)
-        .then(res => {
-          setProduct(res.data)
-          setImages(res.data.productImages.map(item => item.image))
-          setSize1(res.data.size[0])
-          setColor(res.data.colors[0]) 
-          setFetching(false)
-          return res
-        })
-        .catch(err => alert(err))
-      } catch (error) {
-        alert(error)
-      }
-    }
-
-    fetchProduct()
-  },[])
 
 
   const handleIncrease = () => {
@@ -66,12 +43,12 @@ const Product = ({ admin }) => {
   
   const { t } = useTranslation()
   const { id } = useParams()
+  useEffect(() => {
+    localStorage.setItem('id', id)
+  }, [id])
+  let { product, loading, error } = useFetchProduct(id)
   
-
-
-  let { productImages, name, brand, price, size, colors } = product
   
-
   const changeSize = (e) => {
     setSize1(e.target.value)
   }
@@ -79,7 +56,6 @@ const Product = ({ admin }) => {
   const changeColor = (e) => {
     setColor(e.target.value)
   }
-  
   const deleteProduct = async () => {
     setIsPending(true)
     await axios.delete(`${BASE_URL}/products/delete/${id}`, {
@@ -97,7 +73,6 @@ const Product = ({ admin }) => {
       alert(err)
     })
   }
-
 
   const addToCart = async () => {
     if(!refreshToken){
@@ -147,14 +122,19 @@ const Product = ({ admin }) => {
     }
   }
 
-  Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuvi')
+  if (!product || loading) return <Preloading/>
+  if(error) return (
+    <div className='w-full h-screen flex justify-center items-center'>
+      <h1 className='text-4xl font-semibold'>No data found :( </h1>
+    </div>
+  )
 
+  let { productImages, name, brand, price, size, colors } = product
+  Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuvi') 
+  
   return (
-    fetching == true
-      ? 
-        <Preloading/>
-      :
-      <div className='w-full flex flex-col items-center'>
+    <Container>
+      <div className='w-full flex flex-col items-center min-h-screen 3xl:pt-[100px]'>
         <div className='3xl:w-[60%] 2xl:w-[70%] xl:w-[90%] lg:w-full flex justify-center lg:flex-col md:items-center md:px-3 py-11'>
           <Swiper
             className='w-[70%] md:w-1/2 sm:w-[80%] h-[600px] md:h-[400px]'
@@ -209,7 +189,7 @@ const Product = ({ admin }) => {
                   }
                 </select>
               </div>}
-              <div className='flex flex-col'>
+              <div className='flex flex-col mb-2'>
                   <h2 className='text-lg font-semibold capitalize my-3'>{t("quantity")}:</h2>
                   <div className='flex items-center w-max border-[1px] border-gray-500 text-xl px-4 py-2'>
                     <button onClick={handleDecrease} className={`text-2xl disabled:opacity-35`} disabled={quantity == 1 && true}>-</button>
@@ -217,15 +197,15 @@ const Product = ({ admin }) => {
                     <button onClick={handleIncrease} className={`text-2xl disabled:opacity-35`} disabled={quantity == 3 && true}>+</button>
                   </div>
               </div>
-              <Button text={t("add")} onClick={addToCart}/>            
-              {admin && <button onClick={deleteProduct} className={`capitalize font-medium px-3 py-2 w-full mt-4 bg-red-700 text-white ${isPending && 'opacity-75 cursor-not-allowed'}`}>{t("delete")}</button>}
+              <Button text={t("add")} onClick={addToCart} className={'bg-gray-600'}/>            
+              {admin && <Button onClick={deleteProduct} className={`my-4 bg-red-600 ${isPending && 'opacity-75 cursor-not-allowed'}`} text={t("delete")}/>}
+              {admin && <Button onClick={() => dispatch(openEditModal())} className={`bg-green-600 ${isPending && 'opacity-75 cursor-not-allowed'}`} text={t("edit")}/>}
             </div>
           </div>
         </div>
-        {/* <SuggestedProducts id={id}/> */}
       </div>
-    
-    // <div>fds</div>
+      <ToastContainer/>
+    </Container>
   )
 }
 

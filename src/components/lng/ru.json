@@ -87,5 +87,7 @@
     "jacket" : "Витровка",
     "cardigan" : "Кардиган",
     "gilet" : "Жилетка",
-    "jumper" : "жемфер"
+    "jumper" : "жемфер",
+    "noproducts" : "Нет товаров",
+    "productupdated" : "Товар успешно изменен!"
 } 

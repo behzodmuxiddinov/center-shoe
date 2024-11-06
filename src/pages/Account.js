@@ -1,6 +1,5 @@
-import axios from 'axios'
-import React, { useState, useEffect } from 'react'
-import { Button, Preloading, Tabtitle } from '../components'
+import React, { useEffect } from 'react'
+import { Button, Preloading, Tabtitle, Container } from '../components'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,6 +24,8 @@ const Account = () => {
   useEffect(() => {
     if(refreshToken){
       dispatch(fetchAccount())
+    }else{
+      logout()
     }
   }, [])
 
@@ -50,19 +51,21 @@ const Account = () => {
   }
 
   return (
-    <div className='w-full flex justify-start px-11 md:px-3'>
-      <div className='min-h-screen w-1/2 xl:w-[60%] md:w-[70%] sm:w-[90%] py-11 flex flex-col items-start'>
-        <h2 className='text-2xl font-medium mb-4'>{t("welcome")} <span className='capitalize'>{userName}!</span></h2>
-        <Button text={t("editacc")} onClick={editAcc}/>
-        <button className='capitalize font-medium min-w-[200px] border-[1px] border-gray-300 mt-4 bg-red-700 text-white button_slide slide_right' onClick={logout}>
-          <div className="content px-3 py-2">
-            <span className="span">
-              {t("logout")}
-            </span>
-          </div>
-        </button>
+    <Container>
+      <div className='w-full flex justify-start'>
+        <div className='min-h-screen w-1/2 xl:w-[60%] md:w-[70%] sm:w-[90%] py-11 flex flex-col items-start'>
+          <h2 className='text-2xl font-medium mb-4'>{t("welcome")} <span className='capitalize'>{userName}!</span></h2>
+          <Button text={t("editacc")} onClick={editAcc}/>
+          <button className='capitalize font-medium min-w-[200px] border-[1px] border-gray-300 mt-4 bg-red-700 text-white button_slide slide_right' onClick={logout}>
+            <div className="content px-3 py-2">
+              <span className="span">
+                {t("logout")}
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
-    </div>
+    </Container>
   )
 }
 

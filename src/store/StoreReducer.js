@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
+let body = document.getElementsByTagName('body')
+
 const storeSlice = createSlice({
     name : 'store',
     initialState : {
@@ -12,7 +14,8 @@ const storeSlice = createSlice({
         loginfail : false,
         success : false,
         editor : false,
-        successOrder : false
+        successOrder : false,
+        editModal: false
     },
     reducers : {
         setDarkMode : ( state ) => {
@@ -34,15 +37,19 @@ const storeSlice = createSlice({
         },
         toggleFilter : ( state ) => {
             state.filter = !state.filter
-            document.body.style.overflow = state.filter == true ? 'hidden' : 'auto';
+            if(state.filter == true){
+                body[0].classList.add('unscrollable')
+            }else{
+                body[0].classList.remove('unscrollable')
+            }
         },
         hideSuccessOrder : ( state ) => {
             state.successOrder = false
-            document.body.style.overflow = 'auto';
+            body[0].classList.remove('unscrollable')
         },
         showSuccessOrder : ( state ) => {
             state.successOrder = true
-            document.body.style.overflow = 'hidden';
+            body[0].classList.add('unscrollable')
         },
         increaseQuantity : ( state ) => {
             state.quantity = state.quantity + 1
@@ -52,11 +59,11 @@ const storeSlice = createSlice({
         },
         showCart : ( state ) => {
             state.cart = true
-            document.body.style.overflow = 'hidden';
+            body[0].classList.add('unscrollable')
         },
         hideCart : ( state ) => {
             state.cart = false
-            document.body.style.overflow = 'auto';
+            body[0].classList.remove('unscrollable')
         },
         hideFilter : ( state ) => {
             state.filter = false
@@ -84,11 +91,19 @@ const storeSlice = createSlice({
         },
         hideEditor : ( state ) => {
             state.editor = false
-            document.body.style.overflow = 'auto';
+            body[0].classList.remove('unscrollable')
         },
         showEditor : ( state ) => {
             state.editor = true
-            document.body.style.overflow = 'hidden';
+            body[0].classList.add('unscrollable')
+        },
+        openEditModal: ( state ) => {
+            state.editModal = true;
+            body[0].classList.add('unscrollable')
+        },
+        closeEditModal: ( state ) => {
+            state.editModal = false;
+            body[0].classList.remove('unscrollable')
         }
     }
 })
@@ -112,6 +127,8 @@ export const {
     hideEditor,
     showEditor,
     hideSuccessOrder,
-    showSuccessOrder
+    showSuccessOrder,
+    openEditModal,
+    closeEditModal
 } = storeSlice.actions
 export default storeSlice.reducer

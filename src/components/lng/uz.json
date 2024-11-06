@@ -87,5 +87,7 @@
     "jacket" : "Vitrofka",
     "cardigan" : "Kardigan",
     "gilet" : "Nimcha",
-    "jumper" : "jemfer"
+    "jumper" : "jemfer",
+    "noproducts" : "Mahsulotlar yo'q",
+    "productupdated" : "Mahsulot muvaffaqiyatli o'zgartirildi!"
 }

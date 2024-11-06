@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import i18n from './components/i18next';
 import { useTranslation } from 'react-i18next';
 import './App.css';
-import { Layout, Cart, Filter, Overlay, Preloading, Success, ProtectedAdmin, ProtectedCheckout, AccountEditor, SuccessOrder } from './components';
+import { Layout, Cart, Filter, Overlay, Preloading, Success, ProtectedAdmin, ProtectedCheckout, AccountEditor, SuccessOrder, EditProduct } from './components';
 import { Account, Main, Register, Login, Product, Catalog, Checkout, AdminPage, RecoveryPage } from './pages'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProducts } from './store/ProductSlice';
@@ -17,7 +17,6 @@ function App() {
   const { loading } = state
 
   const state2 = useSelector(state => state.recoveryEmail)
-  const { token } = state2
  
   
   const refreshToken = localStorage?.getItem('refreshToken')
@@ -43,7 +42,7 @@ function App() {
 
   const { t } = useTranslation()
   const store = useSelector(state => state.store)
-  const { success } = store
+  const { success, editModal } = store
 
   const [admin, setAdmin] = useState(false)
   const [currentItems, setCurrentItems] = useState([])
@@ -56,7 +55,8 @@ function App() {
 
   return (
     <>
-      {success ? <Success/> : null}
+      {success && <Success/>}
+      {editModal && <EditProduct/>}
       <SuccessOrder/>
       <AccountEditor/>
       <Cart/>

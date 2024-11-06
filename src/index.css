@@ -170,6 +170,13 @@ input{
 .temp{
   grid-template-rows: auto
 }
+.swiper-initialized{
+  max-width: 1024px
+}
+.unscrollable{
+  overflow-y: hidden;
+  height: 100vh;
+}
 
 
 

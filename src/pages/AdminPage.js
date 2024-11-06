@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
-import { Tabtitle, Button } from '../components';
+import { Tabtitle, Button, Container } from '../components';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { v4 as uuidv4 } from 'uuid'
@@ -145,87 +145,89 @@ const AdminPage = () => {
     Tabtitle(t("addProduct"))
 
   return (
-    <div className='w-full min-h-screen py-3 px-11 md:px-3 flex justify-center relative'>
-        <div className='w-1/2 lg:w-3/4 md:w-full'>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <Select
-                    closeMenuOnSelect={false}
-                    components={animatedComponents}
-                    options={nameOptions}
-                    isSearchable
-                    className='relative z-50'
-                    onChange={selectedOptions => setName(selectedOptions)}
-                />
-                
-                <div className='p-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500 my-3 bg-white'>
-                    <input
-                        type="file"
-                        id='pictures'
-                        multiple
-                        accept="image/*"
-                        {...register("pictures", {
+    <Container>
+        <div className='w-full min-h-screen py-3 flex justify-center relative'>
+            <div className='w-1/2 lg:w-3/4 md:w-full'>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <Select
+                        closeMenuOnSelect={true}
+                        components={animatedComponents}
+                        options={nameOptions}
+                        isSearchable
+                        className='relative z-50'
+                        onChange={selectedOptions => setName(selectedOptions)}
+                    />
+                    
+                    <div className='p-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500 my-3 bg-white'>
+                        <input
+                            type="file"
+                            id='pictures'
+                            multiple
+                            accept="image/*"
+                            {...register("pictures", {
+                                required : {
+                                    value : true,
+                                    message : t("req")
+                                },
+                            })}
+                            onChange={handleImageChange}
+                            required
+                            className='text-gray-600 w-max'
+                        />
+                    </div> 
+                    <p className='text-sm w-full text-start text-red-700'>{errors.images?.message}</p> 
+
+                    <input 
+                        type="text" 
+                        id="brand"
+                        {...register("brand", {
                             required : {
                                 value : true,
                                 message : t("req")
                             },
                         })}
-                        onChange={handleImageChange}
-                        required
-                        className='text-gray-600'
+                        placeholder={`${t("brand")}`} 
+                        className='p-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500'
                     />
-                </div> 
-                <p className='text-sm w-full text-start text-red-700'>{errors.images?.message}</p> 
+                    <p className='text-sm w-full text-start text-red-700'>{errors.brand?.message}</p>
 
-                <input 
-                    type="text" 
-                    id="brand"
-                    {...register("brand", {
-                        required : {
-                            value : true,
-                            message : t("req")
-                        },
-                    })}
-                    placeholder={`${t("brand")}`} 
-                    className='p-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500'
-                />
-                <p className='text-sm w-full text-start text-red-700'>{errors.brand?.message}</p>
+                    <input 
+                        type="text" 
+                        id="price"
+                        {...register("price", {
+                            required : {
+                                value : true,
+                                message : t("req")
+                            },
+                        })}
+                        placeholder={`${t("price")}`} 
+                        className='p-3 my-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500'
+                    />
+                    <p className='text-sm w-full text-start text-red-700'>{errors.price?.message}</p>
 
-                <input 
-                    type="text" 
-                    id="price"
-                    {...register("price", {
-                        required : {
-                            value : true,
-                            message : t("req")
-                        },
-                    })}
-                    placeholder={`${t("price")}`} 
-                    className='p-3 my-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500'
-                />
-                <p className='text-sm w-full text-start text-red-700'>{errors.price?.message}</p>
-
-                <Select
-                    closeMenuOnSelect={false}
-                    components={animatedComponents}
-                    isMulti
-                    options={sizeOptions}
-                    isSearchable
-                    className='relative z-40'
-                    onChange={selectedOptions => setSize(selectedOptions)}
-                />
-                <Select
-                    closeMenuOnSelect={false}
-                    components={animatedComponents}
-                    isMulti
-                    options={colorOptions}
-                    isSearchable
-                    className='mt-4 relative z-30'
-                    onChange={selectedOptions => setColor(selectedOptions)}
-                />
-                <Button text={pending ? <CircularProgress /> : t("addProduct")}/>   
-            </form>
+                    <Select
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        isMulti
+                        options={sizeOptions}
+                        isSearchable
+                        className='relative z-40'
+                        onChange={selectedOptions => setSize(selectedOptions)}
+                    />
+                    <Select
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        isMulti
+                        options={colorOptions}
+                        isSearchable
+                        className='my-4 relative z-30'
+                        onChange={selectedOptions => setColor(selectedOptions)}
+                    />
+                    <Button text={pending ? <CircularProgress /> : t("addProduct")}/>   
+                </form>
+            </div>
         </div>
-    </div>
+    </Container>
   )
 }
 
