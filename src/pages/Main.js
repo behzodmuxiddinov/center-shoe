@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { ProductCard, Tabtitle, Button, Preloading, Container, Hero } from '../components'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useFetchProducts } from '../hooks'
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import axios from 'axios';
-import { useSelector } from 'react-redux'
-import { BASE_URL } from '../api/Base_URL'
 
 const Main = ({ viewed, setViewed, admin }) => {
 
-  const state = useSelector(state => state.products)
-  const { loading } = state
-
-  const [products, setProducts] = useState([])
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const req = await axios.get(`${BASE_URL}/products`)
-        const res = req
-        setProducts(res.data.data.products)
-      } catch (error) {
-        alert(error)
-      }
-    }
-    fetchProducts()
-  },[]);
-
   const { t } = useTranslation()
+  const { loading, products } = useFetchProducts()
 
   Tabtitle('sentrobuvi')
 

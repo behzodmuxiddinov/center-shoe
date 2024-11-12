@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../api/Base_URL';
-import { toast } from 'react-toastify';
+import useNotify from './useNotify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const useFetchProducts = () => {
-  const [products, setProducts] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const { notify } = useNotify() 
+    const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -21,9 +22,8 @@ const useFetchProducts = () => {
                     setProducts([]);
                 }
             } catch (err) {
-                console.error('Error fetching product:', err);
                 setError(err);  // Set error state if request fails
-                toast.error("Failed to fetch product details!");  // Show toast error
+                notify("Failed to fetch product details!", "error");  // Show toast error
             } finally {
                 setLoading(false); // Stop loading
             }

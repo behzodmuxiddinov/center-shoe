@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
-import ReactCardFlip from 'react-card-flip'
 import { Link, useNavigate } from 'react-router-dom'
 import { Tabtitle, Button, WrongInput, Container } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginFail, removeLoginFail } from '../store/StoreReducer';
+import { loginFail, removeLoginFail, toggleIsLoggedIn } from '../store/StoreReducer';
 import { sentEmail } from '../store/RecoverySlice'
 import { InputMask } from 'primereact/inputmask'
+import { BASE_URL } from '../api/Base_URL'
+import { useNotify } from '../hooks'
+import ReactCardFlip from 'react-card-flip'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios'
-import { BASE_URL } from '../api/Base_URL'
 
 const Login = () => {
-
-
     const store = useSelector(state => state.store)
     const store2 = useSelector(state => state.recoveryEmail)
-    const { loginfail, light } = store
+    const { loginfail, light, isLoggedIn } = store
     const { pending, instruction, token } = store2
     const dispatch = useDispatch()
-
+    const { notify } = useNotify()
     const { t } = useTranslation()
     const [recover, setRecover] = useState(false)
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const navigate = useNavigate()
-
-    let refreshToken = localStorage.getItem('refreshToken')
 
     const showrecover = (e) => {
         e.preventDefault()
@@ -78,24 +75,25 @@ const Login = () => {
                     navigate('/account')
                     window.location.reload()
                 })
-                .catch(err => dispatch(loginFail()))
+                .catch(err => {
+                    dispatch(loginFail())
+                })
             } catch(error){
-                console.error(error)
+                notify(error.message, 'error')
             }
         }
     }
 
     const onSubmit2 = ( data ) => {
         dispatch(sentEmail(data))
+        reset2()
     }
 
     const togglePasswordVisibility = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };
-
-
     Tabtitle('login')
-
+    console.log(isLoggedIn)
   return (
     <Container>
         <div className='w-full flex justify-center items-center'>

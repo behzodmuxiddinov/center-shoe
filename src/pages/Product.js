@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { FormattedNumber } from '../components/utiles/FormattedNUmber';
 import { useTranslation } from 'react-i18next';
 import { Tabtitle, Button, Preloading, Container } from '../components';
 import { useSelector, useDispatch } from 'react-redux';
-import { showCart, decreaseQuantity, increaseQuantity, openEditModal } from '../store/StoreReducer';
-import { fetchCartItems } from '../store/CartSlice';
-import axios from 'axios';
+import { decreaseQuantity, increaseQuantity, openEditModal } from '../store/StoreReducer';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
-import { BASE_URL } from '../api/Base_URL'
+import { useFetchProduct, useDeleteProduct, useAddProductToCart } from '../hooks';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import useFetchProduct from '../hooks/useFetchProduct';
-import { ToastContainer } from 'react-toastify';
 
 
 const Product = ({ admin }) => {
-  
-  let refreshToken = localStorage?.getItem('refreshToken')
-  const navigate = useNavigate()
-
   const store = useSelector(state => state.store)
-  const store2 = useSelector(state => state.cartItems)
-  const { quantity } = store 
-  const { cartItems } = store2
+  const { quantity, productUpdated } = store 
   const dispatch = useDispatch()
-  const [isPending, setIsPending] = useState(false)
   const [size1, setSize1] = useState(null)
   const [color, setColor] = useState(null)
-
-
   const handleIncrease = () => {
     dispatch(increaseQuantity())
   }
@@ -43,11 +30,14 @@ const Product = ({ admin }) => {
   
   const { t } = useTranslation()
   const { id } = useParams()
+
   useEffect(() => {
     localStorage.setItem('id', id)
   }, [id])
-  let { product, loading, error } = useFetchProduct(id)
-  
+
+  let { product, loading, error } = useFetchProduct(id, productUpdated)
+  let { isPending, deleteProduct } = useDeleteProduct()
+  let { addToCart } = useAddProductToCart(id)
   
   const changeSize = (e) => {
     setSize1(e.target.value)
@@ -56,74 +46,9 @@ const Product = ({ admin }) => {
   const changeColor = (e) => {
     setColor(e.target.value)
   }
-  const deleteProduct = async () => {
-    setIsPending(true)
-    await axios.delete(`${BASE_URL}/products/delete/${id}`, {
-      headers : {
-        Authorization : `Bearer ${refreshToken}`
-      }
-    })
-    .then(res => {
-      setIsPending(false)
-      navigate('/')
-      alert(t("deleted"))
-    })
-    .catch(err => {
-      setIsPending(false)
-      alert(err)
-    })
-  }
 
-  const addToCart = async () => {
-    if(!refreshToken){
-      alert(t('regist'))
-    }else{
-      let obj = {
-        product_id : id,
-        size : size1,
-        color : color,
-        count : quantity,
-        name : name,
-        brand : brand,
-        image : productImages[0].image
-      }
-      let sameItems = cartItems?.[0].basketItems?.filter(item => item.size == obj.size && item.color == obj.color && obj.name == item.product.name && obj.brand == item.product.brand)
-      if(sameItems?.length > 0){
-        await axios.put(`${BASE_URL}/baskets/update/${sameItems[0].id}`, {
-          product_id : sameItems[0].product_id,
-          count : obj.count + sameItems[0].count
-        },
-        {
-            headers : {
-              Authorization : `Bearer ${refreshToken}`,
-              "Content-Type" : "application/json"
-            },
-          }
-        )
-        .then(res => {
-          dispatch(fetchCartItems())
-          dispatch(showCart())
-        })
-        .catch(err => alert(err))
-      }else{
-        await axios.post(`${BASE_URL}/baskets/create`, obj, {
-          headers : {
-            Authorization : `Bearer ${refreshToken}`,
-            "Content-Type" : "application/json"
-          },
-          body : JSON.stringify(obj)
-        })
-        .then(res => {
-          dispatch(fetchCartItems())
-          dispatch(showCart())
-        })
-        .catch(err => alert(err))
-      }
-    }
-  }
-
-  if (!product || loading) return <Preloading/>
-  if(error) return (
+  if (loading) return <Preloading/>
+  if(!product || error) return (
     <div className='w-full h-screen flex justify-center items-center'>
       <h1 className='text-4xl font-semibold'>No data found :( </h1>
     </div>
@@ -132,12 +57,13 @@ const Product = ({ admin }) => {
   let { productImages, name, brand, price, size, colors } = product
   Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuvi') 
   
+  
   return (
-    <Container>
+    <Container className='flex flex-col items-center'>
       <div className='w-full flex flex-col items-center min-h-screen 3xl:pt-[100px]'>
         <div className='3xl:w-[60%] 2xl:w-[70%] xl:w-[90%] lg:w-full flex justify-center lg:flex-col md:items-center md:px-3 py-11'>
           <Swiper
-            className='w-[70%] md:w-1/2 sm:w-[80%] h-[600px] md:h-[400px]'
+            className='w-[70%] md:w-1/2 sm:w-full h-[600px] md:h-[400px]'
             slidesPerView={1}
             modules={[Navigation, Pagination, Scrollbar]}
             navigation
@@ -198,13 +124,12 @@ const Product = ({ admin }) => {
                   </div>
               </div>
               <Button text={t("add")} onClick={addToCart} className={'bg-gray-600'}/>            
-              {admin && <Button onClick={deleteProduct} className={`my-4 bg-red-600 ${isPending && 'opacity-75 cursor-not-allowed'}`} text={t("delete")}/>}
-              {admin && <Button onClick={() => dispatch(openEditModal())} className={`bg-green-600 ${isPending && 'opacity-75 cursor-not-allowed'}`} text={t("edit")}/>}
+              {admin && <Button onClick={() => deleteProduct(id)} className={`my-4 bg-red-600 ${isPending && 'opacity-75 cursor-not-allowed'}`} text={t("delete")}/>}
+              {admin && <Button onClick={() => dispatch(openEditModal())} className="bg-green-600" text={t("edit")}/>}
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer/>
     </Container>
   )
 }

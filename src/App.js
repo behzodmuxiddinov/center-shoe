@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getProducts } from './store/ProductSlice';
 import { BASE_URL } from './api/Base_URL'
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
@@ -57,7 +58,6 @@ function App() {
     <>
       {success && <Success/>}
       {editModal && <EditProduct/>}
-      <SuccessOrder/>
       <AccountEditor/>
       <Cart/>
       <Filter setFilterby={setFilterby} filterby={filterby}/>
@@ -80,6 +80,7 @@ function App() {
           <Route path={`/forgot-password`} element={<RecoveryPage/>}></Route>
         </Route>
       </Routes>
+      <ToastContainer/>
     </>
   );
 }

@@ -37,27 +37,29 @@ const Header = () => {
         localStorage.setItem('lng', i18n.language)
         setLn(e.target.value)
     }
-
+    let refreshToken = localStorage.getItem('refreshToken')
   return (
       <div className='w-full py-3 border-b-[1px] border-gray-500'>
         <Container>
             <div className='flex justify-between'>
                 <Link to='/'>
-                    <img src={logo} alt="logo" className='w-[80px] h-[80px] sm:w-[40px] sm:h-[40px] rounded-full'/>
+                    <div className={`p-1 border-[1px] rounded-full ${light ? 'border-black' : 'border-white'}`}>
+                        <img src={logo} alt="logo" className='w-[80px] h-[80px] sm:w-[40px] sm:h-[40px] rounded-full'/>
+                    </div>
                 </Link>
                 <div className='flex items-center'>
-                    <select name="changelang" id="changelang" value={ln} onChange={changeLng} className='outline-none cursor-pointer bg-transparent text-gray-400'>
+                    <select name="changelang" id="changelang" value={ln} onChange={changeLng} className='cursor-pointer bg-transparent text-gray-400'>
                         <option value='uz'>uz</option>
                         <option value='ru'>ru</option>
                     </select>
-                    <Link to={localStorage.getItem('refreshToken') !== null ? '/account' : '/login'}>
+                    <Link to={refreshToken !== null ? '/account' : '/login'}>
                         <PersonIcon className='mx-6 sm:mx-3 scale-125 cursor-pointer'/>
                     </Link>
-                    <div className='relative'>
+                    <button className='relative'>
                         <ShoppingCartIcon className='scale-110 mr-6 sm:mr-3 cursor-pointer' onClick={handleCart}/>
                         {cartItems?.length > 0 && cartItems?.[0].basketItems?.length > 0 && <div className='w-[10px] h-[10px] bg-gray-700 rounded-full absolute top-[1px] left-4 border-[1px] border-white'></div>}
-                    </div>
-                    <div className='cursor-pointer' onClick={handleTheme}>{light ? <WbSunnyIcon/> : <DarkModeIcon/>}</div>
+                    </button>
+                    <button className='cursor-pointer' onClick={handleTheme}>{light ? <WbSunnyIcon/> : <DarkModeIcon/>}</button>
                 </div>
             </div>
         </Container>

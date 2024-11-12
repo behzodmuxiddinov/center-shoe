@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { ProductCard, Preloading, Container } from '../components';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { toggleFilter } from '../store/StoreReducer';
+import { useFetchProducts } from '../hooks';
+import { Tabtitle } from '../components';
 import ReactPaginate from 'react-paginate';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import { useSelector, useDispatch } from 'react-redux';
-import { toggleFilter } from '../store/StoreReducer';
-import useFetchProducts from '../hooks/useFetchProducts';
 
 const Catalog = ({ filterby, viewed, setViewed }) => {
   
@@ -44,6 +45,8 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
   useEffect(() => {
     setItemOffset(0)
   },[filterby])
+
+  Tabtitle(t("catalog"))
 
   if (products == null || loading) return <Preloading/>
 

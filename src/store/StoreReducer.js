@@ -14,8 +14,8 @@ const storeSlice = createSlice({
         loginfail : false,
         success : false,
         editor : false,
-        successOrder : false,
-        editModal: false
+        editModal: false,
+        productUpdated: false
     },
     reducers : {
         setDarkMode : ( state ) => {
@@ -42,14 +42,6 @@ const storeSlice = createSlice({
             }else{
                 body[0].classList.remove('unscrollable')
             }
-        },
-        hideSuccessOrder : ( state ) => {
-            state.successOrder = false
-            body[0].classList.remove('unscrollable')
-        },
-        showSuccessOrder : ( state ) => {
-            state.successOrder = true
-            body[0].classList.add('unscrollable')
         },
         increaseQuantity : ( state ) => {
             state.quantity = state.quantity + 1
@@ -104,6 +96,9 @@ const storeSlice = createSlice({
         closeEditModal: ( state ) => {
             state.editModal = false;
             body[0].classList.remove('unscrollable')
+        },
+        toggleProductUpdated: state => {
+            state.productUpdated = !state.productUpdated
         }
     }
 })
@@ -126,9 +121,8 @@ export const {
     removeUserFailed,
     hideEditor,
     showEditor,
-    hideSuccessOrder,
-    showSuccessOrder,
     openEditModal,
-    closeEditModal
+    closeEditModal,
+    toggleProductUpdated
 } = storeSlice.actions
 export default storeSlice.reducer

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
-import data from '../data/data.json'
 import Button from './Button';
+import { useNotify } from '../hooks';
+import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid'
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleFilter } from '../store/StoreReducer';
 
 const Filter = ({ setFilterby, filterby }) => {
-
+    const { notify } = useNotify()
     const dispatch = useDispatch()
     const store = useSelector(state => state.store)
     const { light, filter } = store
@@ -188,7 +188,7 @@ const Filter = ({ setFilterby, filterby }) => {
 
     const applyFilter = () => {
         if(filterBtns.filter(item => item.active).length < 1){
-            alert(t("select"))
+            notify(t("select"), 'warning')
         }else{
             setFilterby(filterBtns.filter(item => item.active)[0].value)
             handleFilter()

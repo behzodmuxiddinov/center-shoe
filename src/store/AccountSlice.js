@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { useNotify } from '../hooks'
 import axios from "axios";
 import { BASE_URL } from '../api/Base_URL'
 
@@ -12,6 +12,7 @@ const initialState = {
     phoneNumber : '',
     id : null
 }
+
 
 export const fetchAccount = createAsyncThunk('account/fetchAccount', async () => {
     let refreshToken = localStorage.getItem('refreshToken')

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { InputMask } from 'primereact/inputmask';
-import { showSuccessOrder } from '../store/StoreReducer';
+import Swal from 'sweetalert2'
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
 
@@ -43,16 +43,31 @@ const Cash = () => {
         data.products = products
 
         setPending(true)
-        await axios.post("https://api.sentrobuv.uz/orders/create", data, {
+        await axios.post("https://api.sentrobuv.uz/orders/creat", data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
             }
         })
         .then(res => {
-            dispatch(showSuccessOrder())
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: t("successOrder"),
+                showConfirmButton: false,
+                showCloseButton: true,
+            });
             setPending(false)
         })
-        .catch(err => alert(err))
+        .catch(err => {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                showCloseButton: true,
+            });
+            setPending(false)
+        })
         reset()
     }
 

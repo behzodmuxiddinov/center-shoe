@@ -1,17 +1,20 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
-import Tabtitle from './utiles/Tabtitle'
 import { useSelector, useDispatch } from 'react-redux'
 import { hideEditor } from '../store/StoreReducer'
+import { InputMask } from 'primereact/inputmask'
+import { useNavigate } from 'react-router-dom'
+import { BASE_URL } from '../api/Base_URL'
+import { useNotify } from '../hooks'
+import CircularProgress from '@mui/material/CircularProgress';
+import Tabtitle from './utiles/Tabtitle'
 import axios from 'axios'
 import CloseIcon from '@mui/icons-material/Close';
 import Button from './Button'
-import { InputMask } from 'primereact/inputmask'
-import { useNavigate } from 'react-router-dom'
 
 const AccountEditor = () => {
-
+    const { notify } = useNotify()
     const state = useSelector(state => state.store) 
     const state2 = useSelector(state => state.account)
     const { light, editor } = state
@@ -20,6 +23,7 @@ const AccountEditor = () => {
     const [last_Name, setLast_Name] = useState(lastName)
     const [email1, setEmail1] = useState(email)
     const [number, setNumber] = useState(phoneNumber)
+    const [loading, setLoading] = useState(false)
 
     const refreshToken = localStorage?.getItem("refreshToken")
     let navigate = useNavigate()
@@ -41,21 +45,28 @@ const AccountEditor = () => {
     }
 
     const onSubmit = async ( data ) => {
-        await axios.put(`https://api.sentrobuv.uz/users/update/${id}`, data, {
+        setLoading(true)
+        await axios.put(`${BASE_URL}/users/update/${id}`, data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
             }
         })
         .then(res => {
-            alert(t("updated"))
+            notify(t("updated"), 'success')
             reset()
             navigate('/')
             dispatch(hideEditor())
         })
         .then(res => {
-            window.location.reload()
+            setTimeout(() => {
+                window.location.reload()
+            }, 500);
+            setLoading(false)
         })
-        .catch(err => alert(err))
+        .catch(err => {
+            notify(err.message, 'error')
+            setLoading(false)
+        })
     }
 
   return (
@@ -133,7 +144,7 @@ const AccountEditor = () => {
                     />
                     <p className='text-sm w-full text-start text-red-700'>{errors.number?.message}</p>
 
-                    <Button text={t("edit")}/>
+                    <Button text={loading ? <CircularProgress size={40}/> : t("edit")}/>
                 </form>
             </div>
         </div>

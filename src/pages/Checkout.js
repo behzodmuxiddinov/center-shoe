@@ -24,7 +24,6 @@ const Checkout = () => {
         <div className='h-screen overflow-scroll md:h-max w-[55%] md:w-full flex flex-col items-start py-5 md:py-3'>
           <Cash/>
         </div>
-        
         <div className={`w-[45%] md:w-full h-screen md:h-max overflow-scroll p-5 md:p-3 border-l-[1px] border-gray-500  ${light == true ? 'bg-gray-100' : 'bg-[#141417]'}`}>
           {
             cartItems[0].basketItems.filter(item => item !== undefined).map(item => (
@@ -41,7 +40,7 @@ const Checkout = () => {
                             <h3 className='capitalize'>{item.product.name}</h3>
                             {item.product.name !== 'Perfume' && <div className='flex items-center'>
                               {item.size && <h3 className='mr-2'>{item.size}/{item.color}</h3>}
-                              <span className={`w-3 h-3 rounded-full border-[1px] border-gray-600 ${item.color}`}></span>
+                              <span className={`w-3 h-3 rounded-full border-[1px] border-gray-600 bg-${item.product.colors[0]}`}></span>
                             </div>}
                           </div>
                         </div>

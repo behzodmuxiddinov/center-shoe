@@ -68,10 +68,10 @@
     "logout" : "chiqish",
     "welcome" : "Qaytganingizdan xursandmiz,",
     "delete" : "o'chirish",
-    "deleted" : "o'chirildi",
+    "deleted" : "Mahsulot o'chirildi",
     "regist" : "ro'yxatdan o'ting",
     "nomatches" : "Mos natijalar topilmadi",
-    "added" : "qo'shildi",
+    "added" : "Mahsulot qo'shildi",
     "slippers" : "shippak",
     "classicshirt" : "klassik ko'ylak",
     "suits" : "kostyum-shim",
@@ -89,5 +89,10 @@
     "gilet" : "Nimcha",
     "jumper" : "jemfer",
     "noproducts" : "Mahsulotlar yo'q",
-    "productupdated" : "Mahsulot muvaffaqiyatli o'zgartirildi!"
+    "productupdated" : "Mahsulot muvaffaqiyatli o'zgartirildi!",
+    "sure" : "Aminmisiz?",
+    "revert" : "Amalni ortga qaytarib bo'lmaydi!",
+    "confirmdelete": "Ha, o'chirilsin",
+    "cancel": "Bekor qilish",
+    "catalog": "katalog"
 }
