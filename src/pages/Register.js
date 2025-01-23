@@ -2,8 +2,9 @@ import React, {useState} from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { Tabtitle, Button, WrongInput, Container } from '../components'
+import { useNotify } from '../hooks'
 import { useSelector, useDispatch } from 'react-redux'
-import { userFail, userSuccess, removeSuccess, removeUserFailed } from '../store/StoreReducer';
+import { userFail, removeUserFailed } from '../store/StoreReducer';
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { InputMask } from 'primereact/inputmask'
@@ -14,7 +15,7 @@ import { BASE_URL } from '../api/Base_URL'
 
 const Register = () => {
     let navigate = useNavigate();
-
+    const { notify } = useNotify()
     Tabtitle('register')
     
     const store = useSelector(state => state.store)
@@ -33,23 +34,30 @@ const Register = () => {
         mode: "onBlur",
     });
 
-    const onSubmit = ( data ) => {
-        axios.post(`${BASE_URL}/users/signup`, data)
-        .then(res => {
-            setTimeout(() => {
-                dispatch(userSuccess())
-            }, 2000);
-            setTimeout(() => {
-                dispatch(removeSuccess())
-            }, 5000);
-            localStorage.setItem('accessToken', res.data.tokens.accessToken)
-            localStorage.setItem('refreshToken', res.data.tokens.refreshToken)
-            reset()
-            navigate('/')
-        })
-        .catch(res => {
-            dispatch(userFail())
-        })
+    const onSubmit = async ( data ) => {
+        try{
+            await axios.post(`${BASE_URL}/users/signup`, data)
+            .then(res => {
+                // setTimeout(() => {
+                //     dispatch(userSuccess())
+                // }, 2000);
+                // setTimeout(() => {
+                //     dispatch(removeSuccess())
+                // }, 5000);
+                localStorage.setItem('accessToken', res.data.tokens.accessToken)
+                localStorage.setItem('refreshToken', res.data.tokens.refreshToken)
+                reset()
+            })
+            .then(() => {
+                navigate('/account')
+                window.location.reload()
+            })
+            .catch(_ => {
+                dispatch(userFail())
+            })
+        }catch(error){
+            notify(error.message, 'error')
+        }
     }
 
     const togglePasswordVisibility = () => {

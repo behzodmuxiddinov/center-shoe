@@ -10,12 +10,12 @@ const useFetchProduct = (id, productUpdated) => {
   const { notify } = useNotify()
   useEffect(() => {
     if (!id) {
-      return; // Skip fetch if ID is not provided
+      return;
     }else{
       const fetchProduct = async () => {
           try {
-            setLoading(true); // Start loading
-            setError(null);    // Reset any previous errors
+            setLoading(true);
+            setError(null); 
             const req = await axios.get(`${BASE_URL}/products/${id}`);
             setProduct(req.data);
           } catch (err) {
@@ -29,7 +29,7 @@ const useFetchProduct = (id, productUpdated) => {
     }
   }, [id, productUpdated]); 
 
-  return { product, loading, error }; // Return product data, loading state, and error state
+  return { product, loading, error };
 };
 
 export default useFetchProduct;

@@ -17,8 +17,8 @@ export const fetchCartItems = createAsyncThunk('cartItems/fetchItems', async () 
         return await axios
             .get(`${BASE_URL}/baskets`,{
                 headers : {
-                Authorization : `Bearer ${refreshToken}`,
-                "Content-Type" : "application/json"
+                    Authorization : `Bearer ${refreshToken}`,
+                    "Content-Type" : "application/json"
                 },
             })
             .then(res => res.data)

@@ -21,11 +21,11 @@ const Checkout = () => {
 
   return (
     <Container>
-      <div className='w-full flex md:flex-col-reverse'>
-        <div className='h-screen overflow-scroll md:h-max w-[55%] md:w-full flex flex-col items-start py-5 md:py-3'>
+      <div className='w-full grid grid-cols-2 md:grid-cols-1 gap-x-2 md:gap-x-0'>
+        <div className='h-screen md:h-max w-full flex flex-col items-start py-5 md:py-3'>
           <Cash/>
         </div>
-        <div className={`w-[45%] md:w-full h-screen md:h-max overflow-scroll p-5 md:p-3 border-l-[1px] border-gray-500  ${light === true ? 'bg-gray-100' : 'bg-[#141417]'}`}>
+        <div className={`w-full h-screen md:h-max overflow-scroll p-5 md:p-3 border-l-[1px] border-gray-500  ${light === true ? 'bg-gray-100' : 'bg-[#141417]'}`}>
           {
             cartItems[0].basketItems.filter(item => item !== undefined).map(item => (
                 <div key={item.id} className='flex items-center text-md justify-between mb-5 font-semibold'>
