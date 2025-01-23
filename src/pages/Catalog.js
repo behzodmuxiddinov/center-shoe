@@ -15,7 +15,7 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
   const { light } = store 
   const dispatch = useDispatch()
 
-  const [currentItems, setCurrentItems] = useState([])
+  const [currentItems,setCurrentItems] = useState([])
   const [itemOffset, setItemOffset] = useState(24);
   const [pageCount, setPageCount] = useState(1);
   const itemsPerPage = 8
@@ -37,8 +37,8 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
 
   useEffect(() => {
     if(!products?.length) return;
-      setCurrentItems(filterby.length > 0 ? products?.data?.products?.filter(item => item.name == filterby).slice(itemOffset, endOffset) : products?.slice(itemOffset, endOffset))
-      setPageCount(Math.ceil(filterby.length > 0 ? products?.filter(item => item.name == filterby).length / itemsPerPage : products?.length / itemsPerPage))
+      setCurrentItems(filterby.length > 0 ? products?.data?.products?.filter(item => item.name === filterby).slice(itemOffset, endOffset) : products?.slice(itemOffset, endOffset))
+      setPageCount(Math.ceil(filterby.length > 0 ? products?.filter(item => item.name === filterby).length / itemsPerPage : products?.length / itemsPerPage))
       window.scrollTo(0,0)
   }, [itemOffset, itemsPerPage, products, filterby])
 
@@ -50,7 +50,7 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
 
   if (products == null || loading) return <Preloading/>
 
-  if(products.length == 0){
+  if(products.length === 0){
     <div className='w-full h-screen flex justify-center items-center'>
       <h1 className='text-4xl font-semibold'>{t('noproducts')}</h1>
     </div>
@@ -63,19 +63,19 @@ const Catalog = ({ filterby, viewed, setViewed }) => {
   return (
     <Container>
       <div className='w-full py-11 md:py-2 relative'>
-        <div className={`${filterby.length !== 0 && products?.filter(item => item.name == filterby).length == 0 ? 'flex' : 'grid grid-cols-4 gap-y-7 xl:grid-cols-3 lg:grid-cols-2'}`}>
+        <div className={`${filterby.length !== 0 && products?.filter(item => item.name === filterby).length == 0 ? 'flex' : 'grid grid-cols-4 gap-y-7 gap-x-4 xl:grid-cols-3 lg:grid-cols-2'}`}>
           {
-            filterby.length == 0
+            filterby.length === 0
             ? products?.slice(itemOffset, endOffset).map(product => (
               <ProductCard key={product.id} product={product} viewed={viewed} setViewed={setViewed}/>
             ))
             : 
-            products?.filter(item => item.name == filterby).length > 0
-              ? products.filter(item => item.name == filterby).slice(itemOffset, endOffset).map(product => (
+            products?.filter(item => item.name === filterby).length > 0
+              ? products.filter(item => item.name === filterby).slice(itemOffset, endOffset).map(product => (
                 <ProductCard key={product.id} product={product} viewed={viewed} setViewed={setViewed}/>
               ))
               :
-              <div className='w-full min-h-[350px] md:min-h-[250px] flex justify-center items-center text-center'>
+              <div className='w-full min-h-[550px] 2xl:min-h-[350px] md:min-h-[250px] flex justify-center items-center text-center'>
                 <h2 className='text-3xl lg:text-2xl md:text-xl font-semibold'>
                   {t("nomatches")}
                 </h2>

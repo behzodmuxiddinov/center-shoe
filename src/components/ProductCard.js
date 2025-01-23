@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from 'react-redux'
 import Skeleton from './Skeleton'
 import 'animate.css'
 import { FormattedNumber } from './utiles/FormattedNUmber'
-import axios from 'axios'
+import { BASE_URL } from '../api/Base_URL'
 
 const ProductCard = ({ product, viewed, setViewed }) => {
-
   let { t } = useTranslation()
-  const store = useSelector(state => state.store)
-  const { light } = store
-
   let { productImages, name, brand, price, id } = product
 
   const addToViewed = () => {
@@ -45,20 +40,20 @@ const ProductCard = ({ product, viewed, setViewed }) => {
   }
 
   return (
-    <Link to={`product/${id}`} onClick={addToViewed} className='text-center flex flex-col items-center wow animate__animated animate__zoomIn font-semibold'>
+    <Link to={`product/${id}`} onClick={addToViewed} className='text-center flex flex-col items-center wow animate__animated animate__zoomIn font-semibold shadow-lg pb-3'>
         <img 
-          src={`https://api.sentrobuv.uz/${productImages[0].image}`}
+          src={`${BASE_URL}/${productImages[0].image}`}
           loading='lazy'
           alt={name} 
           className='w-[300px] h-[310px] md:w-[280px] md:h-[300px] sm:w-[110px] sm:h-[130px] mb-3'
           onMouseOver={e => (e.currentTarget.src = `${productImages.length > 1 
             ? 
-              `https://api.sentrobuv.uz/${productImages[1].image}` 
+              `${BASE_URL}/${productImages[1].image}` 
             : 
-              `https://api.sentrobuv.uz/${productImages[0].image}`}`)}
-          onMouseOut={e => (e.currentTarget.src = `https://api.sentrobuv.uz/${productImages[0].image}`)}
+              `${BASE_URL}/${productImages[0].image}`}`)}
+          onMouseOut={e => (e.currentTarget.src = `${BASE_URL}/${productImages[0].image}`)}
         />
-        <h3 className='text-md'>
+        <h3 className='text-md capitalize'>
           {(() => {
             switch (name) {
               case "Polo shirt":
@@ -85,10 +80,14 @@ const ProductCard = ({ product, viewed, setViewed }) => {
                 return t("classicshirt")
               case "Sneakers":
                 return t("sneakers");
+              case "Sweater":
+                return t("sweater");
+              default :
+                return name
             }
           })()}
         </h3>
-        <h3 className='text-md'>{t("brand")}:{brand}</h3>
+        <h3 className='text-md capitalize'>{t("brand")}:{brand}</h3>
         <h3><FormattedNumber number={price}/> so'm</h3>
     </Link>
   )

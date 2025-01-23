@@ -8,7 +8,6 @@ const useFetchProduct = (id, productUpdated) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { notify } = useNotify()
-
   useEffect(() => {
     if (!id) {
       return; // Skip fetch if ID is not provided

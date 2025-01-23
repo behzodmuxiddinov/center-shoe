@@ -8,6 +8,7 @@ import { decreaseQuantity, increaseQuantity, openEditModal } from '../store/Stor
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { useFetchProduct, useDeleteProduct, useAddProductToCart } from '../hooks';
+import { BASE_URL } from '../api/Base_URL';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -44,7 +45,7 @@ const Product = ({ admin }) => {
   }
 
   const changeColor = (e) => {
-    setColor(e.target.value)
+    setColor(e.target.value) 
   }
 
   if (loading) return <Preloading/>
@@ -55,7 +56,7 @@ const Product = ({ admin }) => {
   )
 
   let { productImages, name, brand, price, size, colors } = product
-  Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuvi') 
+  Tabtitle(name ? `${name} | ${brand}` : 'Sentrobuv') 
   
   
   return (
@@ -74,7 +75,7 @@ const Product = ({ admin }) => {
             {
               productImages?.map(item => (
                 <SwiperSlide key={item.image}>
-                  <img src={`https://api.sentrobuv.uz/${item.image}`} className='w-full h-full object-cover' alt={item.image}/>
+                  <img src={`${BASE_URL}/${item.image}`} className='w-full h-full object-cover' alt={item.image}/>
                 </SwiperSlide>
               ))
             }
@@ -93,7 +94,7 @@ const Product = ({ admin }) => {
                         key={item}
                         value={item} 
                         onClick={changeColor} 
-                        className={`border-[1px] w-[30px] h-[30px] mr-2 border-gray-400 ${item} ${item == color ? ' scale-110' : ''}`}
+                        className={`border-[1px] w-[30px] h-[30px] mr-2 border-gray-400 ${item} ${item === color ? ' scale-110' : ''}`}
                       >
                       </button>
                     ))
@@ -118,9 +119,9 @@ const Product = ({ admin }) => {
               <div className='flex flex-col mb-2'>
                   <h2 className='text-lg font-semibold capitalize my-3'>{t("quantity")}:</h2>
                   <div className='flex items-center w-max border-[1px] border-gray-500 text-xl px-4 py-2'>
-                    <button onClick={handleDecrease} className={`text-2xl disabled:opacity-35`} disabled={quantity == 1 && true}>-</button>
+                    <button onClick={handleDecrease} className={`text-2xl disabled:opacity-35`} disabled={quantity === 1 && true}>-</button>
                     <h3 className='text-xl mx-6'>{quantity}</h3>
-                    <button onClick={handleIncrease} className={`text-2xl disabled:opacity-35`} disabled={quantity == 3 && true}>+</button>
+                    <button onClick={handleIncrease} className={`text-2xl disabled:opacity-35`} disabled={quantity === 3 && true}>+</button>
                   </div>
               </div>
               <Button text={t("add")} onClick={addToCart} className={'bg-gray-600'}/>            

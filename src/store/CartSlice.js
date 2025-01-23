@@ -23,7 +23,7 @@ export const fetchCartItems = createAsyncThunk('cartItems/fetchItems', async () 
             })
             .then(res => res.data)
             .catch(err => {
-                if(err.response.data.message == 'You do not have a shopping cart yet!'){
+                if(err.response.data.message === 'You do not have a shopping cart yet!'){
                     return
                 }else{
                     console.error(err)

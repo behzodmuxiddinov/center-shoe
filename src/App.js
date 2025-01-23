@@ -1,25 +1,21 @@
 import React,{ useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import i18n from './components/i18next';
-import { useTranslation } from 'react-i18next';
-import './App.css';
-import { Layout, Cart, Filter, Overlay, Preloading, Success, ProtectedAdmin, ProtectedCheckout, AccountEditor, SuccessOrder, EditProduct } from './components';
-import { Account, Main, Register, Login, Product, Catalog, Checkout, AdminPage, RecoveryPage } from './pages'
+import { Layout, Cart, Filter, Overlay, Preloading, Success, ProtectedAdmin, ProtectedCheckout, AccountEditor, EditProduct } from './components';
+import { Account, Main, Register, Login, Product, Catalog, Checkout, AdminPage, RecoveryPage, ProtectedRoute } from './pages'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProducts } from './store/ProductSlice';
 import { BASE_URL } from './api/Base_URL'
-import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
+import { useNotify } from './hooks';
+import './App.css';
+import axios from 'axios';
 
 function App() {
-
   const dispatch = useDispatch()
   const state = useSelector(state => state.products)
   const { loading } = state
-
-  const state2 = useSelector(state => state.recoveryEmail)
- 
-  
+  const { notify } = useNotify()
   const refreshToken = localStorage?.getItem('refreshToken')
   useEffect(() => {
     let lastLn = localStorage.getItem('lng') 
@@ -36,14 +32,13 @@ function App() {
           setAdmin(true)
         }
       })
-      .catch(error => console.error(error))
+      .catch(error => notify(error.message, "error"))
     }
     dispatch(getProducts())
   }, [])
 
-  const { t } = useTranslation()
   const store = useSelector(state => state.store)
-  const { success, editModal } = store
+  const { success, editModal, editor } = store
 
   const [admin, setAdmin] = useState(false)
   const [currentItems, setCurrentItems] = useState([])
@@ -58,19 +53,23 @@ function App() {
     <>
       {success && <Success/>}
       {editModal && <EditProduct/>}
-      <AccountEditor/>
+      {editor && <AccountEditor/> }
       <Cart/>
       <Filter setFilterby={setFilterby} filterby={filterby}/>
       <Overlay/>
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route path='/' element={<Main viewed={viewed} setViewed={setViewed} admin={admin}/>}></Route>
-          <Route path='/product/:id' element={<Product admin={admin}/>}></Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route path='/product/:id' element={<Product admin={admin}/>}></Route>
+          </Route>
           <Route path='/login' element={<Login/>}></Route>
           <Route path='/account' element={<Account/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
           <Route path='/catalog' element={<Catalog currentItems={currentItems} setCurrentItems={setCurrentItems} filterby={filterby} viewed={viewed} setViewed={setViewed} />}></Route>
-          <Route path='/catalog/product/:id' element={<Product admin={admin}/>}></Route>
+          <Route element={<ProtectedRoute/>}>
+            <Route path='/catalog/product/:id' element={<Product admin={admin}/>}></Route>
+          </Route>
           <Route element={<ProtectedAdmin admin={admin}/>}>
             <Route path='admin' element={<AdminPage/>}></Route>
           </Route>

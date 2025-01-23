@@ -5,11 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import { store } from './store/store';
 import { PrimeReactProvider } from 'primereact/api';
-import { ApiProvider } from '@reduxjs/toolkit/query/react';
-import { productsApi } from './store/ProductSlice';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

@@ -26,10 +26,10 @@ const Footer = () => {
             <div className='flex sm:flex-col'>
               <h3 className='text-xl min-w-[220px]'>{t("social")}:</h3>
               <div className='flex'>
-                <a href="https://www.instagram.com/sentrobuvisports/?hl=en" target='_blank'>
+                <a href="https://www.instagram.com/sentrobuvisports/?hl=en" target='_blank' rel="noreferrer">
                   <InstagramIcon className='w-4 h-4 cursor-pointer mx-3 sm:ml-0'/>
                 </a>
-                <a href="https://t.me/sentrobuvi" target='_blank'>
+                <a href="https://t.me/sentrobuvi" target='_blank' rel="noreferrer">
                   <TelegramIcon className='w-4 h-4 cursor-pointer'/>
                 </a>
               </div>

@@ -14,7 +14,7 @@ const EditProduct = () => {
     let { product } = useFetchProduct(id)
     
     return (
-        <div className={`w-full animate__animated fixed z-50 flex justify-center pointer-events-none break-words ${editModal ? 'animate__zoomIn ' : 'hidden'}`}>
+        <div className={`w-full animate__animated fixed z-40 flex justify-center pointer-events-none break-words ${editModal ? 'animate__zoomIn' : 'animate__zoomOut'}`}>
             <div className='max-w-[1024px] w-full min-h-screen py-3 flex justify-center relative'>
                 {product &&
                     <div className="w-1/2 lg:w-3/4 md:w-full h-max bg-white p-5 sm:p-2 rounded-lg pointer-events-auto">

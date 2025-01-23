@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { BASE_URL } from "../api/Base_URL";
+import { useNotify } from "../hooks";
+import axios from "axios";
 
 
 const initialState = {
@@ -10,12 +11,12 @@ const initialState = {
 }
 
 export const sentEmail = createAsyncThunk('email/recoveryEmail', async ( data ) => {
-    console.log(data)
+    const { notify } = useNotify()
     return await axios.post(`${BASE_URL}/users/forgot-password`, data)
         .then(res => res.data)
         .catch(err => {
-            if(err.response.data.message == "User with this email does not exist!"){
-                alert("User not found")
+            if(err.response.data.message === "User with this email does not exist!"){
+                notify("User not found", "error")
             }
         })
 })
@@ -31,11 +32,9 @@ const recoverySlice = createSlice({
             state.instruction = true
             state.token = action.payload.token
             state.pending = false
-            console.log(state.token)
         })
         builder.addCase(sentEmail.rejected, (state) => {
             state.pending = false
-            // alert('Error')
         })
     }
 })

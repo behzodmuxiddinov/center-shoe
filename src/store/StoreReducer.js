@@ -20,7 +20,7 @@ const storeSlice = createSlice({
     reducers : {
         setDarkMode : ( state ) => {
             let mode = localStorage.getItem('theme')
-            if(mode == 'false'){
+            if(mode === 'false'){
                 state.light = false
                 localStorage.setItem('theme', false)
                 document.getElementsByTagName('body')[0].classList.add("black")
@@ -29,7 +29,7 @@ const storeSlice = createSlice({
         changeTheme : ( state ) => {
             state.light = !state.light
             localStorage.setItem('theme', state.light)
-            if(state.light == false){
+            if(state.light === false){
                 document.getElementsByTagName('body')[0].classList.add("black")
             }else{
                 document.getElementsByTagName('body')[0].classList.remove("black")
@@ -37,7 +37,7 @@ const storeSlice = createSlice({
         },
         toggleFilter : ( state ) => {
             state.filter = !state.filter
-            if(state.filter == true){
+            if(state.filter === true){
                 body[0].classList.add('unscrollable')
             }else{
                 body[0].classList.remove('unscrollable')

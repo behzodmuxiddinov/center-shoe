@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Tabtitle, Cash, Container } from '../components'
 import { useSelector } from 'react-redux'
 import { FormattedNumber } from '../components/utiles/FormattedNUmber'
+import { BASE_URL } from '../api/Base_URL'
 
 const Checkout = () => {
     
@@ -24,13 +25,13 @@ const Checkout = () => {
         <div className='h-screen overflow-scroll md:h-max w-[55%] md:w-full flex flex-col items-start py-5 md:py-3'>
           <Cash/>
         </div>
-        <div className={`w-[45%] md:w-full h-screen md:h-max overflow-scroll p-5 md:p-3 border-l-[1px] border-gray-500  ${light == true ? 'bg-gray-100' : 'bg-[#141417]'}`}>
+        <div className={`w-[45%] md:w-full h-screen md:h-max overflow-scroll p-5 md:p-3 border-l-[1px] border-gray-500  ${light === true ? 'bg-gray-100' : 'bg-[#141417]'}`}>
           {
             cartItems[0].basketItems.filter(item => item !== undefined).map(item => (
                 <div key={item.id} className='flex items-center text-md justify-between mb-5 font-semibold'>
                     <div className='flex items-center'>
                         <div className='relative'>
-                          <img src={`https://api.sentrobuv.uz/${item.product.productImages[0].image}`} alt={item.name} className='mr-4 w-[80px] h-[80px] sm:w-[50px] sm:h-[50px] rounded-md'/>
+                          <img src={`${BASE_URL}/${item.product.productImages[0].image}`} alt={item.name} className='mr-4 w-[80px] h-[80px] sm:w-[50px] sm:h-[50px] rounded-md'/>
                           <div className='absolute rounded-full opacity-70 bg-black w-5 h-5 flex justify-center items-center text-white p-1 text-sm -top-[10px] right-[10px] lg:right-[5px]'>{item.count}</div>
                         </div>
                         <div className='mr-7'>

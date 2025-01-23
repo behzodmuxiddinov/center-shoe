@@ -2,23 +2,18 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { Tabtitle, Button } from '../components'
-import { useSelector, useDispatch } from 'react-redux'
+import { useLocation} from "react-router-dom";
+import { BASE_URL } from '../api/Base_URL'
+import { useNotify } from '../hooks'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import axios from 'axios'
-import { useNavigate, useParams, useLocation} from "react-router-dom";
-import { BASE_URL } from '../api/Base_URL'
 
 const RecoveryPage = () => {
+  const { notify } = useNotify()
   const token = useLocation()
-  let navigate = useNavigate();
-  console.log(token)
 
   Tabtitle('register')
-
-  const store = useSelector(state => state.store)
-  const dispatch = useDispatch()
-  const { failed } = store
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible1, setIsPasswordVisible1] = useState(false);
@@ -54,8 +49,8 @@ const RecoveryPage = () => {
       });
     }else{
       await axios.post(`${BASE_URL}/users/forgot-password/${token}`, data)
-      .then(res => alert(t("passwordchanged")))
-      .catch(err => alert(err))
+      .then(_ => notify(t("passwordchanged"), 'success'))
+      .catch(err => notify(err, 'error'))
       reset()
     }
   }

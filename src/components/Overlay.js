@@ -14,7 +14,7 @@ const Overlay = () => {
   }
 
   return (
-    <div onClick={handleOverlay} className={`w-full fixed z-40 h-screen bg-black opacity-50 ${cart | filter | editor | editModal ? 'flex' : 'hidden'}`}></div>
+    <div onClick={handleOverlay} className={`w-full fixed z-30 h-screen bg-black opacity-50 ${cart | filter | editor | editModal ? 'flex' : 'hidden'}`}></div>
   )
 }
 

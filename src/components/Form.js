@@ -75,7 +75,7 @@ const Form = ({ type }) => {
                 },
                 body : JSON.stringify(data.product_id)
             })
-            .then(res => {
+            .then(_ => {
                 setPending(false)
                 notify(t("added"), "success")
                 navigate("/")
@@ -119,7 +119,7 @@ const Form = ({ type }) => {
 
     return (
         <form
-            onSubmit={handleSubmit(type == 'add' ? onSubmit1 : onSubmit2)} 
+            onSubmit={handleSubmit(type === 'add' ? onSubmit1 : onSubmit2)} 
             className="text-gray-600">
             <Select
                 closeMenuOnSelect={true}
@@ -130,7 +130,7 @@ const Form = ({ type }) => {
                 onChange={selectedOptions => setName(selectedOptions)}
             />
             
-            {type == 'add' && 
+            {type === 'add' && 
                 <>
                     <div className='p-3 w-full rounded-md border-[1px] border-gray-300 focus:border-gray-500 mt-3 bg-white'>
                         <input
@@ -199,7 +199,7 @@ const Form = ({ type }) => {
                 className='my-4 relative z-30'
                 onChange={selectedOptions => setColor(selectedOptions)}
             />
-            <Button text={pending ? <CircularProgress /> : t(type == 'add' ? "addProduct" : "edit")}/>   
+            <Button text={pending ? <CircularProgress /> : t(type === 'add' ? "addProduct" : "edit")}/>   
         </form>
     )
 }

@@ -30,7 +30,7 @@ const AccountEditor = () => {
     const dispatch = useDispatch()
 
     const { t } = useTranslation()
-    Tabtitle(t("edit"))
+    Tabtitle(editor ? t("edit") : "Sentrobuv")
     const {
         register,
         formState: { errors },
@@ -70,7 +70,7 @@ const AccountEditor = () => {
     }
 
   return (
-    <div className={`${editor ? 'flex' : 'hidden'} w-full justify-center items-center fixed z-50 h-screen pointer-events-none`}>
+    <div className={`${editor ? 'flex' : 'hidden'} w-full justify-center items-center fixed z-40 h-screen pointer-events-none`}>
         <div className={`relative pointer-events-auto w-1/3 xl:w-[60%] h-screen md:w-[70%] sm:w-[90%] text-center pt-[40px] pb-[80px] px-11 md:px-3 overflow-y-scroll ${light ? 'bg-white' : 'bg-gray-800'}`}>   
             <div className='w-full'>
                 <div className='w-full flex justify-end'>

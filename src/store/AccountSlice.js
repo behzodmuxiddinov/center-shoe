@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useNotify } from '../hooks'
 import axios from "axios";
 import { BASE_URL } from '../api/Base_URL'
 

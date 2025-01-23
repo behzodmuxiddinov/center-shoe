@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import 'animate.css'
+import React, { useEffect } from 'react'
 import { Checkout } from '../pages';
 import { Link } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { hideCart } from '../store/StoreReducer';
 import { fetchCartItems } from '../store/CartSlice';
-import axios from 'axios';
 import { FormattedNumber } from './utiles/FormattedNUmber';
+import { BASE_URL } from '../api/Base_URL';
+import { useNotify } from '../hooks';
+import CloseIcon from '@mui/icons-material/Close';
+import axios from 'axios';
+import 'animate.css'
 
 const Cart = () => {
   const dispatch = useDispatch()
   const store = useSelector(state => state.store)
   const { light, cart } = store 
-
+  const { notify } = useNotify()
   const store2 = useSelector(state => state.cartItems)
   const { cartItems } = store2
   let total
@@ -39,15 +41,16 @@ const Cart = () => {
   }
 
   const deleteCartItem = async (e) => {
-    await axios.delete(`https://api.sentrobuv.uz/baskets/delete/basket-items/${e.target.id}`,{
+    await axios.delete(`${BASE_URL}/baskets/delete/basket-items/${e.target.id}`,{
       headers : {
         Authorization : `Bearer ${refreshToken}`
       }
     })
     .then(res => {
       dispatch(fetchCartItems())
+      notify(t("deleted"), "success")
     })
-    .catch(err => console.err(err))
+    .catch(err => notify(err.message, "error"))
   }
 
 
@@ -63,7 +66,7 @@ const Cart = () => {
             {
               cartItems[0].basketItems?.map(item => (
                 <div key={item.id} className='w-full flex items-center justify-between mb-3 font-semibold'>
-                  <img src={`https://api.sentrobuv.uz/${item.product.productImages[0].image}`} alt={item.product.name} className='w-[35%] h-[120px]'/>
+                  <img src={`${BASE_URL}/${item.product.productImages[0].image}`} alt={item.product.name} className='w-[35%] h-[120px]'/>
                   <div className='w-[50%] flex flex-col break-words'>
                     <h3>{item.product.name}</h3>
                     {item.size && item.color && <div className='flex items-center'>

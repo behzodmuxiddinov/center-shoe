@@ -16,9 +16,6 @@ const Filter = ({ setFilterby, filterby }) => {
     const handleFilter = () => {
         dispatch(toggleFilter())
     }
-
-
-    // const theme = localStorage.getItem('theme') == 'true'
     const { t } = useTranslation()
     const [filterBtns, setFilterBtns] = useState([
         {
@@ -176,10 +173,9 @@ const Filter = ({ setFilterby, filterby }) => {
         }
     ]
 
-
     const changeFilter = (e) => {
         setFilterBtns(filterBtns.map(item => {
-            if(e.target.value == item.value){
+            if(e.target.value === item.value){
               return {...item, active : true}
             }
             return {...item, active: false}
@@ -215,9 +211,9 @@ const Filter = ({ setFilterby, filterby }) => {
                 filterBtns.map(item => (
                     <button key={item.id} value={item.value} onClick={changeFilter} className='flex relative items-center mb-2 hover:scale-105 lowercase'>
                         <span className='w-2 h-2 rounded-full absolute z-10 bg-gray-600 pointer-events-none'></span>
-                        <h4 className={`transition-all duration-300 z-20 pointer-events-none ${light ? 'bg-white' : 'bg-black'} ${item.active ? 'translate-x-3' : 'translate-x-0'}`}>
+                        <h4 className={`transition-all duration-300 z-20 pointer-events-none ${light ? 'bg-white' : 'bg-black'} ${item.active ? 'translate-x-3' : '-translate-x-1 2xl:translate-x-0'}`}>
                             {filters.map(filter => (
-                                item.value == filter.value ? filter.name : ''
+                                item.value === filter.value ? filter.name : ''
                             ))}
                         </h4>
                     </button>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { Tabtitle, Button, WrongInput, Container } from '../components'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginFail, removeLoginFail, toggleIsLoggedIn } from '../store/StoreReducer';
+import { loginFail, removeLoginFail } from '../store/StoreReducer';
 import { sentEmail } from '../store/RecoverySlice'
 import { InputMask } from 'primereact/inputmask'
 import { BASE_URL } from '../api/Base_URL'
@@ -17,8 +17,8 @@ import axios from 'axios'
 const Login = () => {
     const store = useSelector(state => state.store)
     const store2 = useSelector(state => state.recoveryEmail)
-    const { loginfail, light, isLoggedIn } = store
-    const { pending, instruction, token } = store2
+    const { loginfail, light } = store
+    const { instruction } = store2
     const dispatch = useDispatch()
     const { notify } = useNotify()
     const { t } = useTranslation()
@@ -27,11 +27,11 @@ const Login = () => {
 
     const navigate = useNavigate()
 
-    const showrecover = (e) => {
-        e.preventDefault()
-        setRecover(true)
-        dispatch(removeLoginFail())
-    }
+    // const showrecover = (e) => {
+    //     e.preventDefault()
+    //     setRecover(true)
+    //     dispatch(removeLoginFail())
+    // }
 
     const showlogin = (e) => {
         e.preventDefault()
@@ -64,7 +64,7 @@ const Login = () => {
             setError('password', {
                 type: 'manual',
                 message: t("invalid")
-              });
+                });
         }else{
             try{
                 await axios.post(`${BASE_URL}/users/signin`, data)
@@ -83,7 +83,6 @@ const Login = () => {
             }
         }
     }
-
     const onSubmit2 = ( data ) => {
         dispatch(sentEmail(data))
         reset2()
@@ -93,7 +92,6 @@ const Login = () => {
         setIsPasswordVisible(!isPasswordVisible);
     };
     Tabtitle('login')
-    console.log(isLoggedIn)
   return (
     <Container>
         <div className='w-full flex justify-center items-center'>
@@ -155,7 +153,7 @@ const Login = () => {
                             </div>
                             <p className='text-sm w-full text-start mb-4 mt-1 text-red-700'>{errors.password?.message}</p>
                         
-                            <button onClick={showrecover} className={`bg-transparent border-none cursor-pointer w-max font-semibold mb-2 ${light ? 'text-gray-600 hover:text-gray-700' : 'text-white'}`}>{t("forget")}</button>
+                            {/* <button onClick={showrecover} className={`bg-transparent border-none cursor-pointer w-max font-semibold mb-2 ${light ? 'text-gray-600 hover:text-gray-700' : 'text-white'}`}>{t("forget")}</button> */}
                         
                             <Button text={t("login")}/>
                         </form>

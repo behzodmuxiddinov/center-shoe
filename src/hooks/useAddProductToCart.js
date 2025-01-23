@@ -21,7 +21,7 @@ const useAddProductToCart = (id) => {
     let refreshToken = localStorage?.getItem('refreshToken')
 
     if (!product) {
-        return { addToCart: () => {} }; // Return a no-op function if no product
+      return { addToCart: () => {} }; // Return a no-op function if no product
     }
 
     let { productImages, name, brand } = product

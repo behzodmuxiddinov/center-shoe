@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BASE_URL } from '../api/Base_URL';
 import useNotify from './useNotify';
@@ -9,7 +9,6 @@ const useFetchProducts = () => {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -17,7 +16,7 @@ const useFetchProducts = () => {
                 setError(null);    // Reset any previous errors
                 const req = await axios.get(`${BASE_URL}/products`)
                 if(req.data && req.data.data.products.length > 0){
-                    setProducts(req.data.data.products)
+                    setProducts(req.data.data.products.filter(item => item.productImages.length > 0))
                 }else{
                     setProducts([]);
                 }

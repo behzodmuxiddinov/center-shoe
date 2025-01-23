@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { InputMask } from 'primereact/inputmask';
+import { BASE_URL } from '../api/Base_URL'
 import Swal from 'sweetalert2'
 import CircularProgress from '@mui/material/CircularProgress';
 import axios from 'axios';
@@ -13,8 +14,6 @@ const Cash = () => {
     const state = useSelector(state => state.cartItems)
     const { cartItems } = state
     const { light } = store
-
-    const dispatch = useDispatch()
 
     const [pending, setPending] = useState(false)
     
@@ -43,7 +42,7 @@ const Cash = () => {
         data.products = products
 
         setPending(true)
-        await axios.post("https://api.sentrobuv.uz/orders/creat", data, {
+        await axios.post(`${BASE_URL}/orders/create`, data, {
             headers : {
                 Authorization : `Bearer ${refreshToken}`
             }

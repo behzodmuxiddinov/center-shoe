@@ -10,33 +10,33 @@ const Main = ({ viewed, setViewed, admin }) => {
   const { t } = useTranslation()
   const { loading, products } = useFetchProducts()
 
-  Tabtitle('sentrobuvi')
+  Tabtitle('Sentrobuv')
 
   return (
-    loading == true
+    loading === true
      ? <Preloading/>
      :
-      <main className='w-full flex flex-col'>
+      <main className='w-full flex flex-col relative z-40'>
         <Hero/>
         <Container>
           <div className='w-full flex flex-col items-center'>
             <div className='w-full flex justify-center my-11 md:my-8'>
               <h2 className='text-3xl md:text-xl font-semibold capitalize'>{t("all")}</h2>
             </div>
-            <div className='w-full grid grid-cols-4 gap-y-7 gap-x-2 xl:grid-cols-3 lg:grid-cols-2 temp justify-center'>
+            <div className='w-full grid grid-cols-4 gap-y-7 gap-x-4 xl:grid-cols-3 lg:grid-cols-2 temp justify-center'>
               {
-                products?.slice(0,8).map(product => {
+                products?.slice(0,12).map(product => {
                   return <ProductCard key={product.id} product={product} viewed={viewed} setViewed={setViewed}/>
                 })
               }
             </div>
-            <div className='w-full flex justify-center my-5'>
+            <div className='w-full flex justify-center mb-5 mt-11'>
               <Link to={'/catalog'} onClick={() => window.scrollTo(0,0)}>
                 <Button text={t("view")}/>
               </Link>
             </div>
             {admin && <Link to={'admin'}>
-              <Button text={t("addProduct")}/>
+              <Button className='mb-5' text={t("addProduct")}/>
             </Link>}
           </div>
         </Container>

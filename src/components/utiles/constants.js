@@ -14,7 +14,8 @@ export const nameOptions = [
     { value: 'Cardigan', label: 'Cardigan' },
     { value: 'Jacket', label: 'Jacket' },
     { value: 'Gilet', label: 'Gilet'},
-    { value: 'Jumper', label: 'Jumper'}
+    { value: 'Jumper', label: 'Jumper'},
+    { value: 'Sweater', label: 'Sweater'}
 ]
 
 export const colorOptions = [
