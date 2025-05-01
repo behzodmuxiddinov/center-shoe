@@ -21,9 +21,12 @@ export const fetchAccount = createAsyncThunk('account/fetchAccount', async () =>
             "Content-Type" : "application/json"
         }
     })
-    .then(res => res.data)
+    .then(res => {
+        return res.data
+    })
     .catch(error => {
         localStorage.clear('refreshToken')
+        localStorage.clear('accessToken')
     })
 })
 

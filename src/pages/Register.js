@@ -38,12 +38,6 @@ const Register = () => {
         try{
             await axios.post(`${BASE_URL}/users/signup`, data)
             .then(res => {
-                // setTimeout(() => {
-                //     dispatch(userSuccess())
-                // }, 2000);
-                // setTimeout(() => {
-                //     dispatch(removeSuccess())
-                // }, 5000);
                 localStorage.setItem('accessToken', res.data.tokens.accessToken)
                 localStorage.setItem('refreshToken', res.data.tokens.refreshToken)
                 reset()
